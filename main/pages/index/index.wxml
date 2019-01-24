@@ -28,11 +28,11 @@
       <view class="weui-form-preview__value">{{orderModel.order_id}}</view>
     </view>
     <view class="weui-form-preview__item">
-      <view class="weui-form-preview__label">订单创建日期</view>
+      <view class="weui-form-preview__label">接单日期</view>
       <view class="weui-form-preview__value">{{orderModel.createDate}}</view>
     </view>
     <view class='weui-form-preview__item' wx:if='{{orderModel.doneDate}}'>
-      <view class="weui-form-preview__label">订单完成日期</view>
+      <view class="weui-form-preview__label">完成日期</view>
       <view class="weui-form-preview__value">{{orderModel.doneDate}}</view>
     </view>
     <view class='weui-form-preview__item' wx:if='{{orderModel.note}}'>

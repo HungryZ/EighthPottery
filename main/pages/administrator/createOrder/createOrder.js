@@ -7,13 +7,19 @@ Page({
     addInputValue: null,
     targetNumber: 0,
     nowNumber: 0,
+    createDate: null,
+    dateString: ''
   },
 
   onLoad: function (options) {
-
+    this.data.createDate = new Date()
+    let dateString = this.dateToString(this.data.createDate)
+    this.setData({
+      dateString: dateString
+    })
   },
 
-  addInputing(e) {
+  idInputing(e) {
     this.setData({
       addInputValue: e.detail.value
     })
@@ -41,8 +47,8 @@ Page({
       data: {
         order_id: e,
         progress_id: app.globalData.progress[0]._id,
-        note: '自动生成订单',
-        createDate: new Date()
+        // note: '自动生成订单',
+        createDate: this.data.createDate
       },
       success: res => {
         this.data.nowNumber += 1;
@@ -62,5 +68,19 @@ Page({
       }
     })
   },
+
+  bindDateChange(e) {
+    this.setData({
+      createDate: new Date(e.detail.value)
+    })
+    let dateString = this.dateToString(this.data.createDate)
+    this.setData({
+      dateString: dateString
+    })
+  },
+
+  dateToString(date) {
+    return date.getFullYear() + '年' + (date.getMonth() + 1) + '月' + date.getDate() + '日';
+  }
 
 })

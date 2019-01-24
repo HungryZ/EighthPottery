@@ -4,11 +4,11 @@
     <view>{{orderModel.order_id}}</view>
   </view>
   <view class='lineView'>
-    <text>订单创建日期</text>
+    <text>接单日期</text>
     <view>{{orderModel.createDate}}</view>
   </view>
   <view class='lineView' wx:if='{{orderModel.doneDate}}'>
-    <text>订单完成日期</text>
+    <text>完成日期</text>
     <view>{{orderModel.doneDate}}</view>
   </view>
   <view class='lineView'>
@@ -27,4 +27,4 @@
   </view>
 </view>
 
-<button class='submitButton' bindtap='submitBtnClicked'>提交修改</button>
+<button class="weui-btn" type="primary" bindtap='submitBtnClicked'>提交修改</button>

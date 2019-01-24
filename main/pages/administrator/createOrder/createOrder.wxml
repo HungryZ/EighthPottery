@@ -3,7 +3,7 @@
 <view class="weui-cells weui-cells_after-title">
   <view class="weui-cell">
     <view class="weui-cell__bd">
-      <textarea class="weui-textarea" value='{{orderModel.note}}' placeholder="输入订单号批量生成订单" bindinput='addInputing' style="height: 5em;" />
+      <textarea class="weui-textarea" value='{{orderModel.note}}' placeholder="输入订单号批量生成订单" bindinput='idInputing' style="height: 5em;" />
     </view>
   </view>
   <view class="weui-cells__tips">可输入多个订单号，用「逗号」隔开</view>
@@ -15,7 +15,7 @@
     <view class="weui-cell__bd">接单日期</view>
     <view class="weui-cell__ft weui-cell__ft_in-access">
       <picker mode="date" bindchange="bindDateChange">
-        <view style='color: black'>2017-09-01</view>
+        <view style='color: black'>{{dateString}}</view>
       </picker>
     </view>
   </view>
