@@ -1,0 +1,45 @@
+/* pages/administrator/orderDetail/orderDetail.wxss */
+
+page {
+  display: flex;
+  /* 项目(subView)排列方式 设置为column后主轴方向改变 */
+  flex-direction: column;
+  /* 设置项目在行中的对齐方式 */
+  align-items: center;
+}
+
+.resultView {
+  display: fles;
+  flex-direction: column;
+  margin-top: 10px;
+  width: 94%;
+  border-radius: 10rpx;
+  box-shadow: 0 0 15px #ccc;
+}
+
+.lineView {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.weui-cell_access {
+  width: 100%;
+  padding: 0;
+}
+
+.weui-cell__ft_in-access {
+  color: black;
+}
+
+.weui-cells__title {
+  color: black;
+  font-size: 18.79px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.submitButton {
+  margin-top: 50px;
+  width: 94%;
+}

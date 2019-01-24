@@ -1,0 +1,9 @@
+<!--pages/administrator/progress/progress.wxml-->
+
+<view class='progressCell' wx:for="{{progressArray}}" wx:for-item="item" wx:for-index="idx">
+  <text decode="{{true}}">{{idx + 1}}.&nbsp;</text>
+  <input id='{{idx}}' class='inputView' value='{{item.description}}' bindinput='inputing'></input>
+  <button id='{{idx}}' class='updateButton' bindtap='updateBtnClicked'>修改</button>
+</view>
+
+<button bindtap='addBtnClicked'>新增状态</button>

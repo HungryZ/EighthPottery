@@ -1,0 +1,52 @@
+/* pages/administrator/orderList/orderList.wxss */
+
+page {
+  display: flex;
+  /* 项目(subView)排列方式 设置为column后主轴方向改变 */
+  flex-direction: column;
+  /* 设置项目在行中的对齐方式 */
+  align-items: center;
+}
+
+.allOrderBaseView {
+  margin-bottom: 10pt;
+  width: 94%;
+  display: flex;
+}
+
+.undoneButton {
+  font-size: 36rpx;
+  color: gray;
+  width: 50%;
+}
+
+.allButton {
+  font-size: 36rpx;
+  color: gray;
+  width: 50%;
+}
+
+.orderCell {
+  display: flex;
+  align-items: center;
+  border-width: 1rpx;
+  border-style: solid;
+  border-radius: 10rpx;
+  border-color: #ccc;
+  width: 94%;
+}
+
+.cellDesLabel {
+  width: 60%;
+  padding-left: 2%;
+}
+
+.completeButton {
+  width: 20%;
+  /* background-color: #0a0; */
+}
+
+.deleteButton {
+  width: 20%;
+  /* background-color: #e3170d; */
+}

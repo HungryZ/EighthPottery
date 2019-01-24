@@ -1,0 +1,30 @@
+<view class='resultView' wx:if='{{orderModel}}'>
+  <view class='lineView'>
+    <text>订单号</text>
+    <view>{{orderModel.order_id}}</view>
+  </view>
+  <view class='lineView'>
+    <text>订单创建日期</text>
+    <view>{{orderModel.createDate}}</view>
+  </view>
+  <view class='lineView' wx:if='{{orderModel.doneDate}}'>
+    <text>订单完成日期</text>
+    <view>{{orderModel.doneDate}}</view>
+  </view>
+  <view class='lineView'>
+    <view class="weui-cell weui-cell_access" bindtap='selectProgress'>
+      <view class="weui-cell__bd">进度</view>
+      <view class="weui-cell__ft weui-cell__ft_in-access">{{orderModel.progress}}</view>
+    </view>
+  </view>
+  <view class="weui-cells__title">备注</view>
+  <view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell">
+      <view class="weui-cell__bd">
+        <textarea class="weui-textarea" value='{{orderModel.note}}' placeholder="请输入备注" bindinput='noteInputing' style="height: 5em" />
+      </view>
+    </view>
+  </view>
+</view>
+
+<button class='submitButton' bindtap='submitBtnClicked'>提交修改</button>

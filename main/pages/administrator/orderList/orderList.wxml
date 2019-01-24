@@ -1,0 +1,10 @@
+<view class='allOrderBaseView'>
+  <button class='undoneButton' bindtap='undoneBtnClicked' style='{{!filterBool?"color:black;background-color:#fcd692;":""}}'>未完成订单</button>
+  <button class='allButton' bindtap='allBtnClicked' style='{{filterBool?"color:black;background-color:#fcd692;":""}}'>全部订单</button>
+</view>
+
+<view class='orderCell' wx:for="{{orderArray}}" wx:for-item="item" wx:for-index="idx" id='{{idx}}' bindtap='cellClicked'>
+  <text class='cellDesLabel' decode="{{true}}">「{{item.order_id}}」&nbsp;&nbsp;{{item.progress}}</text>
+  <button class='completeButton' id='{{idx}}' bindtap='completeBtnClicked'>完成</button>
+  <button class='deleteButton' id='{{idx}}' bindtap='deleteBtnClicked'>删除</button>
+</view>

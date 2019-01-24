@@ -1,0 +1,19 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/administrator/orderList/orderList",
+    "pages/administrator/home/home",
+    "pages/administrator/progress/progress",
+    "pages/administrator/limit/limit",
+    "pages/administrator/createOrder/createOrder",
+    "pages/administrator/orderDetail/orderDetail"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "初八陶社",
+    "backgroundColor": "#eeeeee",
+    "backgroundTextStyle": "light",
+    "enablePullDownRefresh": false
+  }
+}
