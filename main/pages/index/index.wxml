@@ -15,12 +15,6 @@
   <view class="weui-search-bar__cancel-btn" hidden="{{!inputShowed}}" bindtap="hideInput">取消</view>
 </view>
 
-<navigator url="../administrator/createOrder/createOrder" class="weui-cell weui-cell_access">
-  <view class="weui-cell__bd">111111111</view>
-
-</navigator>
-
-
 <view class="weui-form-preview" wx:if='{{orderModel}}'>
   <view class="weui-form-preview__hd">
     <view class="weui-form-preview__item">
