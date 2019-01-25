@@ -6,7 +6,7 @@ Page({
   data: {
     _id: null,
     orderModel: null,
-    orderModel_progress: null
+    updateParameters: {}
   },
 
   onLoad: function (options) {
@@ -15,29 +15,25 @@ Page({
   },
 
   noteInputing(e) {
-    this.data.orderModel.note = e.detail.value;
+    this.data.updateParameters.note = e.detail.value;
   },
 
   selectProgress() {
     var that = this
-    var progressArray = app.globalData.progress;
-    var descriptionArray = [];
-    var _idArray = [];
-    progressArray.forEach(progress => {
-      _idArray.push(progress._id);
-      descriptionArray.push(progress.description);
-    });
+    var doneDescription = app.globalData.progress[app.globalData.progress.length - 1].description;
     wx.showActionSheet({
-      itemList: descriptionArray,
+      itemList: [doneDescription],
       success: function (res) {
         if (!res.cancel) {
           console.log(res.tapIndex)
           var newOrderModel = that.data.orderModel;
-          newOrderModel.progress_id = _idArray[res.tapIndex];
-          newOrderModel.progress = descriptionArray[res.tapIndex];
+          newOrderModel.progress = doneDescription;
+
           that.setData({
             orderModel: newOrderModel
           })
+          that.data.updateParameters.isDone = true;
+          that.data.updateParameters.doneDate = new Date()
         }
       }
     });
@@ -79,10 +75,7 @@ Page({
     })
     const db = wx.cloud.database()
     db.collection('order').doc(_id).update({
-      data: {
-        progress_id: this.data.orderModel.progress_id,
-        note: this.data.orderModel.note
-      },
+      data: this.data.updateParameters,
       success: res => {
         wx.showToast({
           title: '修改成功',

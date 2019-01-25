@@ -1,9 +1,8 @@
 App({
-
   /**
    * 当小程序初始化完成时，会触发 onLaunch（全局只触发一次）
    */
-  onLaunch: function () {
+  onLaunch: function() {
     this.globalData = {}
 
     this.configCloud();
@@ -61,24 +60,36 @@ App({
 
   configOrder(e) {
     e.forEach(order => {
-      // 根据progressId查询对应中文描述
-      var progressId = order.progress_id;
-      this.globalData.progress.forEach(progress => {
-        if (progress._id == progressId) {
-          order.progress = progress.description;
+      const progressArray = this.globalData.progress;
+      if (order.isDone) {
+        // 已完成
+        order.progress = progressArray[progressArray.length - 1].description;
+      } else {
+        let days = (new Date() - order.createDate) / 1000 / 60 / 60 / 24
+        let tdays = 0 // 所需时间
+        console.log('耗时：' + days + ' 天')
+        for (var i = 0; i < progressArray.length; i++) {
+          let progress = progressArray[i]
+          tdays += progress.time
+          if (tdays > days) {
+            order.progress = progress.description;
+            break;
+          }
         }
-      })
-      // date转string
-      if (order.createDate) {
-        var date = order.createDate;
-        var dateString = date.getFullYear() + '年' + (date.getMonth() + 1) + '月' + date.getDate() + '日';
-        order.createDate = dateString;
+
       }
+
+      // date转string
+      var date = order.createDate;
+      var dateString = date.getFullYear() + '年' + (date.getMonth() + 1) + '月' + date.getDate() + '日';
+      order.createDate = dateString;
+
       if (order.doneDate) {
         var date = order.doneDate;
         var dateString = date.getFullYear() + '年' + (date.getMonth() + 1) + '月' + date.getDate() + '日';
         order.doneDate = dateString;
       }
+
 
     });
   },

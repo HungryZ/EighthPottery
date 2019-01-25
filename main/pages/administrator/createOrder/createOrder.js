@@ -46,9 +46,9 @@ Page({
     db.collection('order').add({
       data: {
         order_id: e,
-        progress_id: app.globalData.progress[0]._id,
         // note: '自动生成订单',
-        createDate: this.data.createDate
+        createDate: this.data.createDate,
+        isDone: false
       },
       success: res => {
         this.data.nowNumber += 1;

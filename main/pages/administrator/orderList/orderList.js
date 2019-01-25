@@ -8,21 +8,13 @@ Page({
    */
   data: {
     orderArray: null,
-    firstProgressId: '',  //未完成
-    secondProgressId: '', //已完成
-    filterBool: false,
+    filterBool: false,  // 控制筛选按钮
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    // this.setData({
-    //   secondProgressId: app.globalData.progress[1]._id,
-    // })
-    this.data.firstProgressId = app.globalData.progress[0]._id;
-    this.data.secondProgressId = app.globalData.progress[1]._id;
-
     this.refreshData();
   },
 
@@ -92,7 +84,7 @@ Page({
   getUndoneOrder() {
     const db = wx.cloud.database()
     db.collection('order').where({
-      progress_id: this.data.firstProgressId,
+      isDone: false,
     }).get({
       success: res => {
         wx.hideLoading();
@@ -120,7 +112,7 @@ Page({
     const db = wx.cloud.database()
     db.collection('order').doc(_id).update({
       data: {
-        progress_id: this.data.secondProgressId,
+        isDone: true,
         doneDate:  new Date()
       },
       success: res => {
