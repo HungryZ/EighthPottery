@@ -12,7 +12,8 @@ Page({
   },
 
   onLoad: function (options) {
-    this.data.createDate = new Date()
+    // 将时间默认调整为 08:00,因为不知道云函数Date类型如何传递
+    this.data.createDate = new Date(this.dateToString(new Date()) + ' 08:00')
     let dateString = this.dateToString(this.data.createDate)
     this.setData({
       dateString: dateString
@@ -29,7 +30,6 @@ Page({
     wx.showLoading({
       title: '创建中',
     })
-    var firstProgressId = app.globalData.progress[0]._id;
     // 全局替换中文逗号
     var idString = this.data.addInputValue.replace(/，/g, ",");
     var orderIdArray = idString.split(',');
@@ -80,7 +80,7 @@ Page({
   },
 
   dateToString(date) {
-    return date.getFullYear() + '年' + (date.getMonth() + 1) + '月' + date.getDate() + '日';
+    return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
   }
 
 })

@@ -67,7 +67,6 @@ App({
       } else {
         let days = (new Date() - order.createDate) / 1000 / 60 / 60 / 24
         let tdays = 0 // 所需时间
-        console.log('耗时：' + days + ' 天')
         // 第一个为完成状态，跳过。（可以，但没必要）
         for (var i = 1; i < progressArray.length; i++) {
           let progress = progressArray[i]

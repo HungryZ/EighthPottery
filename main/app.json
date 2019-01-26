@@ -6,6 +6,7 @@
     "pages/administrator/progress/progress",
     "pages/administrator/limit/limit",
     "pages/administrator/createOrder/createOrder",
+    "pages/administrator/completeOrder/completeOrder",
     "pages/administrator/orderDetail/orderDetail"
   ],
   "window": {
@@ -15,5 +16,17 @@
     "backgroundColor": "#eeeeee",
     "backgroundTextStyle": "light",
     "enablePullDownRefresh": false
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/administrator/home/home",
+        "text": "我的"
+      }
+    ]
   }
 }

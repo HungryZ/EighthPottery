@@ -40,23 +40,6 @@
       <view class="weui-form-preview__value">{{orderModel.note}}</view>
     </view>
   </view>
-  <!-- <view class="weui-form-preview__ft">
-    <navigator url="" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">操作11111</navigator> 
-  </view> -->
 </view>
 
 <!-- <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber"> 获取手机号</button> -->
-<!-- <picker class="weui-btn" mode="date" bindchange="bindDateChange">
-  <button type="default">日期选择器</button>
-</picker> -->
-
-<!-- 用户登录 -->
-<view class="userinfo">
-  <button wx:if="{{isAdministrator}}" bindtap='adminBtnClicked'>管理订单</button>
-
-  <button class='loginButton' wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo">登录</button>
-  <block wx:else>
-    <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-    <!-- <text class="userinfo-nickname">{{userInfo.nickName}}</text> -->
-  </block>
-</view>
