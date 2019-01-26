@@ -1,10 +1,36 @@
-<view class='allOrderBaseView'>
-  <button class='undoneButton' bindtap='undoneBtnClicked' style='{{!filterBool?"color:black;background-color:#fcd692;":""}}'>未完成订单</button>
-  <button class='allButton' bindtap='allBtnClicked' style='{{filterBool?"color:black;background-color:#fcd692;":""}}'>全部订单</button>
-</view>
+<view class="page">
+  <view class="page__bd">
+    <view class="weui-tab">
+      <view class="weui-navbar">
+        <block wx:for="{{tabs}}" wx:key="*this">
+          <view id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" bindtap="tabClick">
+            <view class="weui-navbar__title">{{item}}</view>
+          </view>
+        </block>
+        <view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);width: 100px"></view>
+      </view>
 
-<view class='orderCell' wx:for="{{orderArray}}" wx:for-item="item" wx:for-index="idx" id='{{idx}}' bindtap='cellClicked'>
-  <text class='cellDesLabel' decode="{{true}}">「{{item.order_id}}」&nbsp;&nbsp;{{item.progress}}</text>
-  <button class='completeButton' id='{{idx}}' bindtap='completeBtnClicked'>完成</button>
-  <button class='deleteButton' id='{{idx}}' bindtap='deleteBtnClicked'>删除</button>
+      <view class="weui-tab__panel">
+        <view class="weui-cells weui-cells_after-title">
+          <view id='{{idx}}' class="weui-cell weui-cell_input" wx:for="{{orderArray}}" wx:for-item="item" wx:for-index="idx" bindtap='cellClicked' style='height: 120rpx'>
+
+            <view class="weui-cell__hd">
+              <view class="weui-label">{{item.order_id}}</view>
+            </view>
+
+            <view class="weui-cell__bd">
+              <view class="weui-label">{{item.progress}}</view>
+            </view>
+
+            <view class="weui-cell__ft weui-cell__ft_in-access">
+              <button id='{{idx}}' class="weui-btn" catchtap="completeBtnClicked" wx:if='{{!item.isDone}}'>完成</button>
+            </view>
+
+          </view>
+        </view>
+      </view>
+
+    </view>
+  </view>
+
 </view>

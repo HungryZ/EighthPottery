@@ -9,6 +9,7 @@ Page({
    */
   data: {
     progressArray: null,
+    nowStep: 0
   },
 
   /**
@@ -18,10 +19,15 @@ Page({
     this.getAllProgress();
   },
 
-  updateBtnClicked(e) {
+  descriptInputing(e) {
     var index = e.currentTarget.id;
-    this.updateProgressByIndex(index);
-  }, 
+    this.data.progressArray[index].description = e.detail.value;
+  },
+
+  timeInputing(e) {
+    var index = e.currentTarget.id;
+    this.data.progressArray[index].time = e.detail.value;
+  },
 
   addBtnClicked(e) {
     wx.showLoading({
@@ -31,10 +37,9 @@ Page({
     db.collection('progress').add({
       data: {
         description: '新增状态',
-        index: this.data.progressArray.length
+        index: this.data.progressArray.length,
       },
       success: res => {
-        this.updateGlobalProgressData();
         this.getAllProgress();
         wx.showToast({
           title: '新增成功',
@@ -51,9 +56,25 @@ Page({
     })
   },
 
+  deleteBtnClicked(e) {
+    let index = e.currentTarget.id;
+    let _id = this.data.progressArray[index]._id;
+    this.openConfirm(_id);
+  },
+
+  saveBtnClicked(e) {
+    wx.showLoading({
+      title: '正在保存',
+    })
+    this.data.nowStep = 0
+    this.data.progressArray.forEach(progress => {
+      this.updateProgress(progress)
+    })
+  },
+
   getAllProgress(e) {
     wx.showLoading({
-      title: '正在加载',
+      title: '',
     })
     const db = wx.cloud.database();
     db.collection('progress').get({
@@ -62,31 +83,55 @@ Page({
         this.setData({
           progressArray: res.data
         })
+        app.globalData.progress = res.data;
       }
     })
   },
 
-  updateProgressByIndex(e) {
+  deleteProgressById(_id) {
     wx.showLoading({
-      title: '正在加载',
+      title: '',
     })
-    var progressId = this.data.progressArray[e]._id;
-    var newDescription = this.data.progressArray[e].description;
-
     const db = wx.cloud.database()
-    db.collection('progress').doc(progressId).update({
-      data: {
-        description: newDescription
-      },
+    db.collection('progress').doc(_id).remove({
       success: res => {
-        this.updateGlobalProgressData();
-        wx.showToast({
-          title: '修改成功',
+        this.getAllProgress();
+        wx.hideLoading()
+        this.setData({
+          counterId: '',
+          count: null,
         })
       },
       fail: err => {
         wx.showToast({
-          title: '修改失败',
+          icon: 'none',
+          title: '删除失败',
+        })
+        console.error('[数据库] [删除记录] 失败：', err)
+      }
+    })
+  },
+
+  updateProgress(progress) {
+
+    const db = wx.cloud.database()
+    db.collection('progress').doc(progress._id).update({
+      data: {
+        description: progress.description,
+        time: progress.time
+      },
+      success: res => {
+        this.data.nowStep += 1
+        if (this.data.nowStep == this.data.progressArray.length) {
+          wx.showToast({
+            title: '保存成功',
+          })
+          this.getAllProgress()
+        }
+      },
+      fail: err => {
+        wx.showToast({
+          title: '保存失败',
           icon: 'none'
         })
         console.error('[数据库] [更新记录] 失败：', err)
@@ -94,27 +139,23 @@ Page({
     })
   },
 
-  inputing(e) {
-    var index = e.currentTarget.id;
-    this.data.progressArray[index].description = e.detail.value;
-  },
-
-  updateGlobalProgressData(e) {
-    // 获取progress表
-    const db = wx.cloud.database();
-    db.collection('progress').get({
-      success: res => {
-        app.globalData.progress = res.data;
-        console.log('[progress] [查询记录] 成功: ', res)
-      },
-      fail: err => {
-        wx.showToast({
-          icon: 'none',
-          title: '查询记录失败'
-        })
-        console.error('[数据库] [查询记录] 失败：', err)
+  openConfirm(_id) {
+    let that = this
+    wx.showModal({
+      title: '删除确认',
+      content: '将要删除该条记录',
+      confirmText: "删除",
+      confirmColor: "#e64340",
+      cancelText: "取消",
+      success: function (res) {
+        console.log(res);
+        if (res.confirm) {
+          that.deleteProgressById(_id)
+        } else {
+          console.log('取消')
+        }
       }
-    })
-  }
+    });
+  },
 
 })

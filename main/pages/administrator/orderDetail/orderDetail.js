@@ -20,7 +20,7 @@ Page({
 
   selectProgress() {
     var that = this
-    var doneDescription = app.globalData.progress[app.globalData.progress.length - 1].description;
+    var doneDescription = app.globalData.progress[0].description;
     wx.showActionSheet({
       itemList: [doneDescription],
       success: function (res) {
@@ -41,6 +41,10 @@ Page({
 
   submitBtnClicked(e) {
     this.updateOrderById(this.data._id)
+  },
+
+  deleteBtnClicked() {
+    this.openConfirm();
   },
 
   getOrderById(_id) {
@@ -89,6 +93,49 @@ Page({
         console.error('[数据库] [更新记录] 失败：', err)
       }
     })
+  },
+
+  deleteOrderById(_id) {
+    wx.showLoading({
+      title: '',
+    })
+    const db = wx.cloud.database()
+    db.collection('order').doc(_id).remove({
+      success: res => {
+        wx.showToast({
+          title: '删除成功',
+        })
+        wx.navigateBack({
+          
+        })
+      },
+      fail: err => {
+        wx.showToast({
+          icon: 'none',
+          title: '删除失败',
+        })
+        console.error('[数据库] [删除记录] 失败：', err)
+      }
+    })
+  },
+
+  openConfirm: function () {
+    let that = this
+    wx.showModal({
+      title: '删除确认',
+      content: '将要删除该条记录',
+      confirmText: "删除",
+      confirmColor: "#e64340",
+      cancelText: "取消",
+      success: function (res) {
+        console.log(res);
+        if (res.confirm) {
+          that.deleteOrderById(that.data._id)
+        } else {
+          console.log('取消')
+        }
+      }
+    });
   },
 
 })

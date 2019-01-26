@@ -42,5 +42,4 @@ page {
 .weui-btn {
   margin-top: 50px;
   width: 94%;
-  box-shadow: 0 0 15px #ccc;
 }

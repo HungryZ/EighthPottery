@@ -28,3 +28,4 @@
 </view>
 
 <button class="weui-btn" type="primary" bindtap='submitBtnClicked'>提交修改</button>
+<button class="weui-btn" type="warn" bindtap='deleteBtnClicked'>删除订单</button>

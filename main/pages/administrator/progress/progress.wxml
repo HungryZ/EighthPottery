@@ -1,9 +1,26 @@
 <!--pages/administrator/progress/progress.wxml-->
+<view class="weui-cells weui-cells_after-title">
+  <view class="weui-cell weui-cell_input" wx:for="{{progressArray}}" wx:for-item="item" wx:for-index="idx">
 
-<view class='progressCell' wx:for="{{progressArray}}" wx:for-item="item" wx:for-index="idx">
-  <text decode="{{true}}">{{idx + 1}}.&nbsp;</text>
-  <input id='{{idx}}' class='inputView' value='{{item.description}}' bindinput='inputing'></input>
-  <button id='{{idx}}' class='updateButton' bindtap='updateBtnClicked'>修改</button>
+    <view class="weui-cell__hd" style='width: 100rpx'>
+      <view class="weui-label">{{idx}}.</view>
+    </view>
+
+    <view class="weui-cell__bd">
+      <input id='{{idx}}' class="weui-input" value='{{item.description}}' placeholder="阶段名称" bindinput='descriptInputing' />
+      <input id='{{idx}}' class="weui-input" type='number' value='{{item.time}}' placeholder="耗时" bindinput='timeInputing' />
+    </view>
+
+    <view class="weui-cell__ft">
+      <button id='{{idx}}' class="weui-btn" type="warn" bindtap="deleteBtnClicked">删除</button>
+    </view>
+
+  </view>
 </view>
+<view class="weui-cells__tips">耗时单位：天</view>
+<view class="weui-cells__tips">序号 0 代表完成状态，不参与计算，从序号 1 开始通过接单日期动态计算状态</view>
 
-<button bindtap='addBtnClicked'>新增状态</button>
+<view class="weui-btn-area" style='margin: 64rpx 20rpx 128rpx 20rpx;'>
+  <button class="weui-btn" type="default" bindtap="addBtnClicked">新增状态</button>
+  <button class="weui-btn" type="primary" bindtap="saveBtnClicked">保存</button>
+</view>
