@@ -54,8 +54,6 @@ Page({
   },
   
   cellClicked(e) {
-    // 判断是否点击的是完成、删除按钮（它们文字长度2）
-    // if (e._relatedInfo.anchorTargetText.length == 2) return;
     var _id = this.data.orderArray[e.currentTarget.id]._id;
     wx.navigateTo({
       url: '../orderDetail/orderDetail?_id=' + _id,
@@ -111,27 +109,27 @@ Page({
   },
 
   completeOrderById(_id) {
-    wx.showLoading({
-      title: '',
-    })
-    const db = wx.cloud.database()
-    db.collection('order').doc(_id).update({
+    wx.showLoading()
+    wx.cloud.callFunction({
+      name: 'updateOrder',
       data: {
-        isDone: true,
-        doneDate:  new Date()
+        orderModel: {
+          _id: _id,
+          isDone: true,
+          doneDate: this.dateToString(new Date())
+        }
       },
       success: res => {
-        this.refreshData();
-        wx.showToast({
-          title: '状态已修改',
-        })
+        wx.hideLoading()
+        console.log('[云函数] [updateOrder] 调用成功：', res.result)
+        this.refreshData()
       },
       fail: err => {
+        console.error('[云函数] [completeOrder] 调用失败', err)
         wx.showToast({
-          title: '修改失败',
-          icon: 'none'
+          icon: 'none',
+          title: '请求失败'
         })
-        console.error('[数据库] [更新记录] 失败：', err)
       }
     })
   },
@@ -145,6 +143,10 @@ Page({
     } else {
       this.getAllOrder();
     }
-  }
+  },
+
+  dateToString(date) {
+    return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+  },
 
 })

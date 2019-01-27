@@ -30,7 +30,7 @@ Page({
       },
       {
         path: 'progress',
-        title: '状态管理',
+        title: '进度管理',
       },
       {
         path: 'limit',

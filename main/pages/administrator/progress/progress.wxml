@@ -1,26 +1,24 @@
 <!--pages/administrator/progress/progress.wxml-->
-<view class="weui-cells weui-cells_after-title">
-  <view class="weui-cell weui-cell_input" wx:for="{{progressArray}}" wx:for-item="item" wx:for-index="idx">
+<view class="weui-cells">
+  <block wx:for="{{progressArray}}">
 
-    <view class="weui-cell__hd" style='width: 100rpx'>
-      <view class="weui-label">{{idx ? idx + '.' : '最终'}}</view>
-    </view>
-
-    <view class="weui-cell__bd">
+    <!-- <view class="weui-cell__bd">
       <input id='{{idx}}' class="weui-input" value='{{item.description}}' placeholder="阶段名称" bindinput='descriptInputing' />
       <input id='{{idx}}' class="weui-input" type='number' value='{{item.time}}' placeholder="耗时" bindinput='timeInputing' />
-    </view>
+    </view> -->
 
-    <view class="weui-cell__ft">
+    <!-- <view class="weui-cell__ft weui-cell__ft_in-access">{{item.description}}
       <button id='{{idx}}' class="weui-btn" type="warn" bindtap="deleteBtnClicked">删除</button>
-    </view>
+    </view> -->
 
-  </view>
+    <navigator url="../progressDetail/progressDetail?_id={{item._id}}" class="weui-cell weui-cell_access" style='height: 80rpx'>
+      <view class="weui-cell__bd">{{index ?'进度' + index : '最终状态'}}</view>
+      <view class="weui-cell__ft weui-cell__ft_in-access">{{item.description}}({{item.time}})</view>
+    </navigator>
+
+  </block>
 </view>
-<view class="weui-cells__tips">耗时单位：天</view>
-<view class="weui-cells__tips">序号 0 代表完成状态，不参与计算，从序号 1 开始通过接单日期动态计算状态</view>
 
 <view class="weui-btn-area" style='margin: 64rpx 20rpx 128rpx 20rpx;'>
   <button class="weui-btn" type="default" bindtap="addBtnClicked">新增状态</button>
-  <button class="weui-btn" type="primary" bindtap="saveBtnClicked">保存</button>
 </view>

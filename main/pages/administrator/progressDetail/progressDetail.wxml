@@ -1,0 +1,33 @@
+<view class='weui-cells'>
+
+  <view class='weui-cell'>
+    <view class='weui-cell__bd'>序号</view>
+    <view class='weui-cell__ft'>{{progressModel.index}}</view>
+  </view>
+
+  <view class='weui-cell'>
+    <view class='weui-cell__bd'>名称</view>
+    <view class='weui-cell__ft'>
+      <input class="weui-input" value='{{progressModel.description}}' placeholder="名称" bindinput='descriptInputing' />
+    </view>
+  </view>
+
+  <view class='weui-cell'>
+    <view class='weui-cell__bd'>耗时</view>
+    <view class='weui-cell__ft'>
+      <input class="weui-input" type='number' value='{{progressModel.time}}' placeholder="耗时" bindinput='timeInputing' />
+    </view>
+  </view>
+
+</view>
+
+<view class="note">
+  <view>备注</view>
+  <textarea class="weui-textarea" value='{{progressModel.note}}' placeholder="请输入备注" bindinput='noteInputing' />
+</view>
+<view class="weui-cells__tips">耗时单位：天</view>
+
+<view class="weui-btn-area" style='margin: 64rpx 20rpx 128rpx 20rpx;'>
+  <button class="weui-btn" type="primary" bindtap='submitBtnClicked'>提交修改</button>
+  <button class="weui-btn" type="warn" bindtap='deleteBtnClicked'>删除</button>
+</view>

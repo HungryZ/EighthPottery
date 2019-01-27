@@ -51,7 +51,6 @@ Page({
         })
       },
       fail: err => {
-        wx.hideLoading()
         console.error('[云函数] [completeOrder] 调用失败', err)
         wx.showToast({
           icon: 'none',

@@ -36,8 +36,12 @@
       <view class="weui-form-preview__value">{{orderModel.doneDate}}</view>
     </view>
     <view class='weui-form-preview__item' wx:if='{{orderModel.note}}'>
-      <view class="weui-form-preview__label">备注</view>
+      <view class="weui-form-preview__label">订单备注</view>
       <view class="weui-form-preview__value">{{orderModel.note}}</view>
+    </view>
+    <view class='weui-form-preview__item' wx:if='{{orderModel.progressNote}}'>
+      <view class="weui-form-preview__label">状态备注</view>
+      <view class="weui-form-preview__value">{{orderModel.progressNote}}</view>
     </view>
   </view>
 </view>

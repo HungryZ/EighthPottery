@@ -4,6 +4,7 @@
     "pages/administrator/orderList/orderList",
     "pages/administrator/home/home",
     "pages/administrator/progress/progress",
+    "pages/administrator/progressDetail/progressDetail",
     "pages/administrator/limit/limit",
     "pages/administrator/createOrder/createOrder",
     "pages/administrator/completeOrder/completeOrder",

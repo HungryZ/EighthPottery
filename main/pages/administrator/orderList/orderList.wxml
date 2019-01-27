@@ -12,7 +12,7 @@
 
       <view class="weui-tab__panel">
         <view class="weui-cells weui-cells_after-title">
-          <view id='{{idx}}' class="weui-cell weui-cell_input" wx:for="{{orderArray}}" wx:for-item="item" wx:for-index="idx" bindtap='cellClicked' style='height: 120rpx'>
+          <view id='{{idx}}' class="weui-cell" wx:for="{{orderArray}}" wx:for-item="item" wx:for-index="idx" bindtap='cellClicked' style='height: 80rpx'>
 
             <view class="weui-cell__hd">
               <view class="weui-label">{{item.order_id}}</view>
@@ -22,7 +22,7 @@
               <view class="weui-label">{{item.progress}}</view>
             </view>
 
-            <view class="weui-cell__ft weui-cell__ft_in-access">
+            <view class="weui-cell__ft_in-access">
               <button id='{{idx}}' class="weui-btn" catchtap="completeBtnClicked" wx:if='{{!item.isDone}}'>完成</button>
             </view>
 

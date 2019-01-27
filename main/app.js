@@ -16,7 +16,8 @@ App({
     } else {
       wx.cloud.init({
         traceUser: true,
-        env: 'test-aa70dd',
+        // env: 'test-aa70dd', 
+        env: 'release-c4723b', 
       })
     }
   },
@@ -67,13 +68,25 @@ App({
       } else {
         let days = (new Date() - order.createDate) / 1000 / 60 / 60 / 24
         let tdays = 0 // 所需时间
+        var isConfig = false
         // 第一个为完成状态，跳过。（可以，但没必要）
         for (var i = 1; i < progressArray.length; i++) {
           let progress = progressArray[i]
           tdays += progress.time
           if (tdays > days) {
             order.progress = progress.description;
+            if (progress.note) {
+              order.progressNote = progress.note
+            }
+            isConfig = true
             break;
+          }
+        }
+        if (!isConfig) {
+          const lastProgress = progressArray[progressArray.length - 1]
+          order.progress = lastProgress.description
+          if (lastProgress.note) {
+            order.progressNote = lastProgress.note
           }
         }
 
@@ -81,12 +94,12 @@ App({
 
       // date转string
       var date = order.createDate;
-      var dateString = date.getFullYear() + '年' + (date.getMonth() + 1) + '月' + date.getDate() + '日';
+      var dateString = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
       order.createDate = dateString;
 
       if (order.doneDate) {
         var date = order.doneDate;
-        var dateString = date.getFullYear() + '年' + (date.getMonth() + 1) + '月' + date.getDate() + '日';
+        var dateString = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
         order.doneDate = dateString;
       }
 

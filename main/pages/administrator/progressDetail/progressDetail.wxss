@@ -1,0 +1,19 @@
+/* pages/administrator/progressDetail/progressDetail.wxss */
+.weui-cell {
+  height: 80rpx;
+}
+
+.weui-cell__ft {
+  color: black;
+}
+
+.weui-textarea {
+  height: 5em;
+  margin-top: 10px;
+}
+
+.note {
+  padding: 15px;
+  box-shadow: 0 0 15px #ccc;
+  font-size: 17px;
+}

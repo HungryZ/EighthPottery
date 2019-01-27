@@ -14,7 +14,7 @@ Page({
   onLoad: function (options) {
     // 将时间默认调整为 08:00,因为不知道云函数Date类型如何传递
     this.data.createDate = new Date(this.dateToString(new Date()) + ' 08:00')
-    let dateString = this.dateToString(this.data.createDate)
+    let dateString = this.dateToString(new Date())
     this.setData({
       dateString: dateString
     })

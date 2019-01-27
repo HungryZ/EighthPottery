@@ -11,7 +11,8 @@ Page({
 
   onLoad: function (options) {
     this.data._id = options._id;
-    this.getOrderById(this.data._id);
+    this.data.updateParameters._id = options._id
+    this.getOrder();
   },
 
   noteInputing(e) {
@@ -20,40 +21,43 @@ Page({
 
   selectProgress() {
     var that = this
-    var doneDescription = app.globalData.progress[0].description;
+    var descriptions = [app.globalData.progress[0].description, '重置']
     wx.showActionSheet({
-      itemList: [doneDescription],
+      itemList: descriptions,
       success: function (res) {
         if (!res.cancel) {
           console.log(res.tapIndex)
           var newOrderModel = that.data.orderModel;
-          newOrderModel.progress = doneDescription;
-
+          newOrderModel.progress = descriptions[res.tapIndex];
           that.setData({
             orderModel: newOrderModel
           })
-          that.data.updateParameters.isDone = true;
-          that.data.updateParameters.doneDate = new Date()
+          if (res.tapIndex == 0) {
+            that.data.updateParameters.isDone = true;
+            that.data.updateParameters.doneDate = that.dateToString(new Date())
+          } else {
+            that.data.updateParameters.isDone = false;
+          }
         }
       }
     });
   },
 
   submitBtnClicked(e) {
-    this.updateOrderById(this.data._id)
+    this.updateOrder()
   },
 
   deleteBtnClicked() {
     this.openConfirm();
   },
 
-  getOrderById(_id) {
+  getOrder() {
     wx.showLoading({
       title: '正在加载',
     })
     const db = wx.cloud.database()
     db.collection('order').where({
-      _id: _id
+      _id: this.data._id
     }).get({
       success: res => {
         wx.hideLoading();
@@ -73,48 +77,48 @@ Page({
     })
   },
 
-  updateOrderById(_id) {
-    wx.showLoading({
-      title: '正在更新',
-    })
-    const db = wx.cloud.database()
-    db.collection('order').doc(_id).update({
-      data: this.data.updateParameters,
+  updateOrder() {
+    wx.showLoading()
+    wx.cloud.callFunction({
+      name: 'updateOrder',
+      data: {
+        orderModel: this.data.updateParameters
+      },
       success: res => {
-        wx.showToast({
-          title: '修改成功',
-        })
+        wx.hideLoading()
+        console.log('[云函数] [updateOrder] 调用成功：', res.result)
+        this.getOrder()
       },
       fail: err => {
+        console.error('[云函数] [updateOrder] 调用失败', err)
         wx.showToast({
-          title: '修改失败',
-          icon: 'none'
+          icon: 'none',
+          title: '请求失败'
         })
-        console.error('[数据库] [更新记录] 失败：', err)
       }
     })
   },
 
-  deleteOrderById(_id) {
-    wx.showLoading({
-      title: '',
-    })
-    const db = wx.cloud.database()
-    db.collection('order').doc(_id).remove({
+  deleteOrder() {
+    wx.showLoading()
+    wx.cloud.callFunction({
+      name: 'deleteOrder',
+      data: {
+        _id: this.data._id
+      },
       success: res => {
+        console.log('[云函数] [deleteOrder] 调用成功：', res.result)
+        wx.navigateBack()
         wx.showToast({
-          title: '删除成功',
-        })
-        wx.navigateBack({
-          
+          title: '刪除成功'
         })
       },
       fail: err => {
+        console.error('[云函数] [deleteOrder] 调用失败', err)
         wx.showToast({
           icon: 'none',
-          title: '删除失败',
+          title: '请求失败'
         })
-        console.error('[数据库] [删除记录] 失败：', err)
       }
     })
   },
@@ -130,12 +134,25 @@ Page({
       success: function (res) {
         console.log(res);
         if (res.confirm) {
-          that.deleteOrderById(that.data._id)
+          that.deleteOrder()
         } else {
           console.log('取消')
         }
       }
     });
+  },
+
+  dateToString(date) {
+    return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+  },
+
+  bindDateChange(e) {
+    let newModel = this.data.orderModel
+    newModel.createDate = e.detail.value
+    this.setData({
+      orderModel: newModel
+    })
+    this.data.updateParameters.createDate = e.detail.value
   },
 
 })
