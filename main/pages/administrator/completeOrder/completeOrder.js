@@ -6,7 +6,8 @@ Page({
     addInputValue: null,
     successIDArray: [],
     failureIDArray: [],
-    dateString: ''
+    dateString: '',
+    isResultShow: false,
   },
 
   onLoad: function (options) {
@@ -33,30 +34,6 @@ Page({
   },
 
   updateOrderByOrderIdArray(orderIdArray) {
-    // const db = wx.cloud.database()
-    // db.collection('order').where({
-    //   order_id: order_id
-    // }).update({
-    //   data: {
-    //     isDone: true,
-    //     doneDate: this.data.doneDate
-    //   },
-    //   success: res => {
-    //     wx.showToast({
-    //       title: '修改成功',
-    //     })
-    //     this.data.successIDArray.push(order_id)
-    //     console.log(this.data.successIDArray)
-    //   },
-    //   fail: err => {
-    //     wx.showToast({
-    //       title: '修改失败',
-    //       icon: 'none'
-    //     })
-    //     console.error('[数据库] [更新记录] 失败：', err)
-    //     this.data.failureIDArray.push(order_id)
-    //   }
-    // })
     // 调用云函数
     wx.cloud.callFunction({
       name: 'completeOrderArray',
@@ -66,11 +43,20 @@ Page({
       },
       success: res => {
         wx.hideLoading()
-        console.log('[云函数] [completeOrder] 调用成功：', res)
+        console.log('[云函数] [completeOrder] 调用成功：', res.result)
+        this.setData({
+          isResultShow: true,
+          successIDArray: res.result.successIDs,
+          failureIDArray: res.result.failureIDs
+        })
       },
       fail: err => {
         wx.hideLoading()
         console.error('[云函数] [completeOrder] 调用失败', err)
+        wx.showToast({
+          icon: 'none',
+          title: '请求失败'
+        })
       }
     })
   },

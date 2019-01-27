@@ -3,7 +3,7 @@
   <view class="weui-cell weui-cell_input" wx:for="{{progressArray}}" wx:for-item="item" wx:for-index="idx">
 
     <view class="weui-cell__hd" style='width: 100rpx'>
-      <view class="weui-label">{{idx}}.</view>
+      <view class="weui-label">{{idx ? idx + '.' : '最终'}}</view>
     </view>
 
     <view class="weui-cell__bd">

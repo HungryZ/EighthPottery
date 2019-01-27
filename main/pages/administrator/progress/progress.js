@@ -118,7 +118,7 @@ Page({
     db.collection('progress').doc(progress._id).update({
       data: {
         description: progress.description,
-        time: progress.time
+        time: Number(progress.time)
       },
       success: res => {
         this.data.nowStep += 1

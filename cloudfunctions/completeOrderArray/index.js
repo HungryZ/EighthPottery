@@ -6,7 +6,8 @@ const db = cloud.database()
 
 exports.main = async(event, context) => {
   // 承载所有操作的 promise 的数组
-  const tasks = []
+  const tasks = [], successIDs = [], failureIDs = []
+  
   for (let i = 0; i < event.orderIDArray.length; i++) {
     const promise = db.collection('order').where({
         order_id: event.orderIDArray[i]
@@ -20,13 +21,18 @@ exports.main = async(event, context) => {
     tasks.push(promise)
   }
   // 等待执行所有
-  let result = (await Promise.all(tasks)).map(item => {
-    // 修改成功数量，用于判断是否修改成功……从而操作id数组
-    return item.stats.updated
-    console.log('111111')
-  })
+  const results = await Promise.all(tasks)
+  for (var i = 0; i < results.length; i++) {
+    // results[i].stats.updated代表成功更新的个数
+    if (results[i].stats.updated) {
+      successIDs.push(event.orderIDArray[i])
+    } else {
+      failureIDs.push(event.orderIDArray[i])
+    }
+  }
 
   return {
-    success: result
+    successIDs: successIDs,
+    failureIDs: failureIDs
   }
 }

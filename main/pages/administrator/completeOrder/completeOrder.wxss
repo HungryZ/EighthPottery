@@ -1,1 +1,5 @@
 /* pages/administrator/completeOrder/completeOrder.wxss */
+.result-item {
+  display: flex;
+  flex-wrap: wrap;
+}
