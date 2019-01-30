@@ -1,6 +1,12 @@
 <view class="userinfo">
-  <button open-type="getUserInfo" bindgetuserinfo="getUserInfo" class="userinfo-avatar" style="background-image: url({{userInfo.avatarUrl?userInfo.avatarUrl:'./user-unlogin.png'}})"></button>
-  <text class="userinfo-nickname">{{userInfo.nickName?userInfo.nickName:'点击头像登陆'}}</text>
+  <!-- <button open-type="getUserInfo" bindgetuserinfo="getUserInfo" class="userinfo-avatar" style="{{'background-image: url(' + userInfo.avatarUrl ? userInfo.avatarUrl : unloginUrl + ')'}}"></button>
+  <text class="userinfo-nickname">{{userInfo.nickName?userInfo.nickName:'点击头像登陆'}}</text> -->
+
+  <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl ? userInfo.avatarUrl : unloginUrl}}" mode="cover"></image>
+  <button class='loginBtn' wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo" style=''> 点击登录 </button>
+  <block wx:else>
+    <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+  </block>
 </view>
 
 <view wx:if='{{isAdministrator}}'>

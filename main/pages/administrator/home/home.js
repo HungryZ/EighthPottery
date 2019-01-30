@@ -9,7 +9,8 @@ Page({
     orderArray: null,
     searchInputValue: null,
     inputVal: "",
-    inputShowed: false,
+    inputShowed: false, 
+    unloginUrl: 'user-unlogin.png',
 
     userInfo: {},
     hasUserInfo: false,
@@ -90,6 +91,34 @@ Page({
       this.onGetOpenid();
       this.saveUser();
     }
+  },
+
+  saveUser() {
+    // if
+    this.addNewUser();
+    // else
+    // update
+  },
+
+  addNewUser() {
+    const db = wx.cloud.database()
+    db.collection('user').add({
+      data: {
+        avatarUrl: this.data.userInfo.avatarUrl,
+        nickName: this.data.userInfo.nickName,
+        createDate: new Date()
+      },
+      success: res => {
+        console.log('[数据库] [添加新用户] 成功')
+      },
+      fail: err => {
+        console.error('[数据库] [添加新用户] 失败')
+      }
+    })
+  },
+
+  updateUser() {
+
   },
 
   onGetOpenid: function () {

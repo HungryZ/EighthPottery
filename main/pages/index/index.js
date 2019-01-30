@@ -19,19 +19,6 @@ Page({
   onLoad: function (options) {
   },
 
-  getUserInfo: function (e) {
-    console.log(e)
-    if (e.detail.userInfo) {
-      app.globalData.userInfo = e.detail.userInfo
-      this.setData({
-        userInfo: e.detail.userInfo,
-        hasUserInfo: true
-      })
-      this.onGetOpenid();
-      this.saveUser();
-    }
-  },
-
   onGetOpenid: function () {
     // 调用云函数
     wx.cloud.callFunction({
@@ -112,37 +99,6 @@ Page({
     wx.navigateTo({
       url: '../administrator/home/home',
     })
-  },
-
-  saveUser() {
-    // const db = wx.cloud.database()
-    // console.log('111111111111111')
-    // var count = db.collection('user').where({
-    //   _openid: this.data.openid
-    // }).count();
-    // console.log('111111111111111', count)
-    this.addNewUser();
-  },
-
-  addNewUser() {
-    const db = wx.cloud.database()
-    db.collection('user').add({
-      data: {
-        avatarUrl: this.data.userInfo.avatarUrl,
-        nickName: this.data.userInfo.nickName,
-        createDate: new Date()
-      },
-      success: res => {
-        console.log('[数据库] [添加新用户] 成功')
-      },
-      fail: err => {
-        console.error('[数据库] [添加新用户] 失败')
-      }
-    })
-  },
-
-  updateUser() {
-
   },
 
   bindDateChange(e) {
