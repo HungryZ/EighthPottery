@@ -10,7 +10,7 @@ Page({
     searchInputValue: null,
     inputVal: "",
     inputShowed: false, 
-    unloginUrl: 'user-unlogin.png',
+    unloginUrl: '../../../image/user-unlogin.png',
 
     userInfo: {},
     hasUserInfo: false,

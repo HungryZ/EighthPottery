@@ -1,0 +1,22 @@
+.swiper-item {
+  width: 100%;
+  height: 300rpx;
+}
+
+.search-navi, .mallView {
+  background-color: #ddd;
+  height: 200rpx;
+
+  display: flex;
+  /* 主轴 */
+  justify-content: center;
+  /* 交叉轴 */
+  align-items: center;
+}
+
+.search-img {
+  width: 80rpx;
+  height: 80rpx;
+  margin-right: 20rpx;
+}
+

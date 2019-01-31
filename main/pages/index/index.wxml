@@ -1,49 +1,20 @@
-<view class="weui-search-bar">
-  <view class="weui-search-bar__form">
-    <view class="weui-search-bar__box">
-      <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
-      <input type="text" class="weui-search-bar__input" placeholder="请输入订单号" value="{{inputVal}}" focus="{{inputShowed}}" bindinput="inputing" bindconfirm='searchBtnClicked' />
-      <view class="weui-icon-clear" wx:if="{{inputVal.length > 0}}" bindtap="clearInput">
-        <icon type="clear" size="14"></icon>
-      </view>
-    </view>
-    <label class="weui-search-bar__label" hidden="{{inputShowed}}" bindtap="showInput">
-      <icon class="weui-icon-search" type="search" size="14"></icon>
-      <view class="weui-search-bar__text">请输入订单号查询</view>
-    </label>
-  </view>
-  <view class="weui-search-bar__cancel-btn" hidden="{{!inputShowed}}" bindtap="hideInput">取消</view>
-</view>
+<swiper indicator-dots="true" autoplay="true" interval="3000" duration="750" circular="true">
+  <block wx:for="{{imgUrls}}">
+    <swiper-item style='background-color: orange;'>
+      <image class="swiper-item" src="{{item}}" mode='aspectFit' />
+    </swiper-item>
+  </block>
+</swiper>
 
-<view class="weui-form-preview" wx:if='{{orderModel}}'>
-  <view class="weui-form-preview__hd">
-    <view class="weui-form-preview__item">
-      <view class="weui-form-preview__label">订单状态</view>
-      <view class="weui-form-preview__value_in-hd">{{orderModel.progress}}</view>
-    </view>
-  </view>
-  <view class="weui-form-preview__bd">
-    <view class="weui-form-preview__item">
-      <view class="weui-form-preview__label">订单号</view>
-      <view class="weui-form-preview__value">{{orderModel.order_id}}</view>
-    </view>
-    <view class="weui-form-preview__item">
-      <view class="weui-form-preview__label">接单日期</view>
-      <view class="weui-form-preview__value">{{orderModel.createDate}}</view>
-    </view>
-    <view class='weui-form-preview__item' wx:if='{{orderModel.doneDate}}'>
-      <view class="weui-form-preview__label">完成日期</view>
-      <view class="weui-form-preview__value">{{orderModel.doneDate}}</view>
-    </view>
-    <view class='weui-form-preview__item' wx:if='{{orderModel.note}}'>
-      <view class="weui-form-preview__label">订单备注</view>
-      <view class="weui-form-preview__value">{{orderModel.note}}</view>
-    </view>
-    <view class='weui-form-preview__item' wx:if='{{orderModel.progressNote}}'>
-      <view class="weui-form-preview__label">状态备注</view>
-      <view class="weui-form-preview__value">{{orderModel.progressNote}}</view>
-    </view>
-  </view>
-</view>
+<navigator class='search-navi' url='../search/search'>
+  <image class="search-img" src="../../image/search.png" />
+  <text style='font-size: 28px'>订单查询</text>
+</navigator>
 
-<!-- <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber"> 获取手机号</button> -->
+<navigator class='search-navi' url='../webview/webview' style='background-color: #c7ffec'>
+  <view>商城跳转</view>
+</navigator>
+
+<!-- <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber"> 获取手机号</button>
+https://weidian.com/?userid=1407876&spider_token=b636&wfr=pbj_item_3367&ifr=pbj_item_3367
+ -->

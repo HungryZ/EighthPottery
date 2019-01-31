@@ -1,8 +1,10 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/administrator/orderList/orderList",
+    "pages/search/search",
+    "pages/webview/webview",
     "pages/administrator/home/home",
+    "pages/administrator/orderList/orderList",
     "pages/administrator/progress/progress",
     "pages/administrator/progressDetail/progressDetail",
     "pages/administrator/limit/limit",
