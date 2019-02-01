@@ -1,49 +1,38 @@
-// 云函数入口文件
 const cloud = require('wx-server-sdk')
-cloud.init()
+cloud.init({
+  env: 'release-c4723b',
+})
 const db = cloud.database()
-// 云函数入口函数
+
 exports.main = async (event, context) => {
-  const wxContext = cloud.getWXContext()
-  const nowDate = new Date()
+  // 承载所有操作的 promise 的数组
+  const tasks = [], successIDs = [], failureIDs = []
 
-  const res = await db.collection('user').where({
-    _openid: wxContext.OPENID
-  }).count()
-
-  const isNewUser = res.total == 0 ? true : false
-  if (isNewUser) {
-    await db.collection('user').add({
-      data: {
-        _openid: wxContext.OPENID,
-        avatarUrl: event.avatarUrl,
-        nickName: event.nickName,
-        createDate: nowDate,
-        lastLoginDate: nowDate,
-      }
+  for (let i = 0; i < event.orderIDArray.length; i++) {
+    const promise = db.collection('order').where({
+      order_id: event.orderIDArray[i]
     })
-  } else {
-    await db.collection('user').where({
-      _openid: wxContext.OPENID
-    }).update({
-      data: {
-        avatarUrl: event.avatarUrl,
-        nickName: event.nickName,
-        lastLoginDate: nowDate,
-      }
-    })
+      .update({
+        data: {
+          isDone: true,
+          doneDate: new Date(event.dateString)
+        }
+      })
+    tasks.push(promise)
   }
-
-  const res = await db.collection('administrator').where({
-    admin_openid: wxContext.OPENID
-  }).count()
-
-  console.log('用户信息：', event.avatarUrl);
-  console.log('用户信息：', event.nickName);
+  // 等待执行所有
+  const results = await Promise.all(tasks)
+  for (var i = 0; i < results.length; i++) {
+    // results[i].stats.updated代表成功更新的个数
+    if (results[i].stats.updated) {
+      successIDs.push(event.orderIDArray[i])
+    } else {
+      failureIDs.push(event.orderIDArray[i])
+    }
+  }
 
   return {
-    message: isNewUser ? '新用户' : '老用户',
-    isAdministrator: res.total == 0 ? false : true
+    successIDs: successIDs,
+    failureIDs: failureIDs
   }
-
 }

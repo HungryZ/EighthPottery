@@ -8,6 +8,7 @@
     "pages/administrator/progress/progress",
     "pages/administrator/progressDetail/progressDetail",
     "pages/administrator/limit/limit",
+    "pages/administrator/addAdmin/addAdmin",
     "pages/administrator/createOrder/createOrder",
     "pages/administrator/completeOrder/completeOrder",
     "pages/administrator/orderDetail/orderDetail"

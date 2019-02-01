@@ -1,17 +1,25 @@
 // pages/administrator/limit/limit.js
 Page({
   data: {
-
+    userArray: [],
   },
+
   onLoad: function (options) {
+    this.getAllAdministrator()
+  },
+
+  getAllAdministrator() {
     wx.cloud.callFunction({
-      name: 'saveUser',
+      name: 'getAllAdministrator',
       data: {},
       success: res => {
-        console.log('[云函数] [saveUser] 调用成功：', res);
+        console.log('[云函数] [getAllAdministrator] ', res)
+        this.setData({
+          userArray: res.result.userArray
+        })
       },
-      fail: err => {
-        console.error('[云函数] [saveUser] 调用失败：', err)
+      fail: res => {
+        console.log('[云函数] [getAllAdministrator] 调用失败', res)
       }
     })
   }

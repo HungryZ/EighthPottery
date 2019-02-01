@@ -1,2 +1,13 @@
-<!--pages/administrator/limit/limit.wxml-->
-<text>Developing</text>
+<view class='baseView'>
+  <block wx:for='{{userArray}}' wx:key="*this">
+    <view class="userinfo" bindtap='userClicked'>
+      <image class="userinfo-avatar" src="{{item.avatarUrl}}" mode="cover"></image>
+      <text class="userinfo-nickname">{{item.nickName}}</text>
+    </view>
+  </block>
+
+  <navigator class="userinfo" url='../addAdmin/addAdmin' hover-class="none">
+    <image class="userinfo-avatar" src="../../../image/add.png" mode="cover" style='border-radius: 0'></image>
+    <text class="userinfo-nickname">新增</text>
+  </navigator>
+</view>
