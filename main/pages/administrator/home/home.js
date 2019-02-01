@@ -53,7 +53,7 @@ Page({
         userInfo: app.globalData.userInfo,
         hasUserInfo: true
       })
-      this.onGetOpenid();
+      this.saveAndCheckUser()
     } else if (this.data.canIUse) {
       // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
       // 所以此处加入 callback 以防止这种情况
@@ -63,7 +63,7 @@ Page({
           userInfo: res.userInfo,
           hasUserInfo: true
         })
-        this.onGetOpenid();
+        this.saveAndCheckUser()
       }
     } else {
       // 在没有 open-type=getUserInfo 版本的兼容处理
@@ -74,7 +74,7 @@ Page({
             userInfo: res.userInfo,
             hasUserInfo: true
           })
-          this.onGetOpenid();
+          this.saveAndCheckUser()
         }
       })
     }
@@ -88,71 +88,31 @@ Page({
         userInfo: e.detail.userInfo,
         hasUserInfo: true
       })
-      this.onGetOpenid();
-      this.saveUser();
+      this.saveAndCheckUser();
     }
   },
 
-  saveUser() {
-    // if
-    this.addNewUser();
-    // else
-    // update
-  },
-
-  addNewUser() {
-    const db = wx.cloud.database()
-    db.collection('user').add({
+  saveAndCheckUser() {
+    wx.cloud.callFunction({
+      name: 'saveAndCheckUser',
       data: {
         avatarUrl: this.data.userInfo.avatarUrl,
-        nickName: this.data.userInfo.nickName,
-        createDate: new Date()
+        nickName: this.data.userInfo.nickName
       },
       success: res => {
-        console.log('[数据库] [添加新用户] 成功')
-      },
-      fail: err => {
-        console.error('[数据库] [添加新用户] 失败')
-      }
-    })
-  },
-
-  updateUser() {
-
-  },
-
-  onGetOpenid: function () {
-    // 调用云函数
-    wx.cloud.callFunction({
-      name: 'login',
-      data: {},
-      success: res => {
-        console.log('[云函数] [login] user openid: ', res.result.openid)
-        app.globalData.openid = res.result.openid
+        console.log('[云函数] [saveAndCheckUser] ', res.result.message)
+        console.log('[云函数] [saveAndCheckUser] ', res.result.isAdministrator)
         this.setData({
-          openid: res.result.openid
+          isAdministrator: res.result.isAdministrator
         })
-        this.checkOpenid();
       },
       fail: err => {
-        console.error('[云函数] [login] 调用失败', err)
+        console.error('[云函数] [saveAndCheckUser] 调用失败', err)
       }
     })
   },
 
-  checkOpenid() {
-    const db = wx.cloud.database()
-    db.collection('administrator').where({
-      admin_openid: this.data.openid
-    }).get({
-      success: res => {
-        if (res.data[0]) {
-          this.setData({
-            isAdministrator: true
-          })
-        }
-      }
-    })
+  bindViewTap() {
   },
 
   searchInputing(e) {

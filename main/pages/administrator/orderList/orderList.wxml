@@ -12,7 +12,7 @@
 
       <view class="weui-tab__panel">
         <view class="weui-cells weui-cells_after-title">
-          <view id='{{idx}}' class="weui-cell" wx:for="{{orderArray}}" wx:for-item="item" wx:for-index="idx" bindtap='cellClicked' style='height: 80rpx'>
+          <view id='{{idx}}' class="weui-cell" wx:for="{{orderArray}}" wx:for-item="item" wx:for-index="idx" wx:key="*this" bindtap='cellClicked' style='height: 80rpx'>
 
             <view class="weui-cell__hd">
               <view class="weui-label">{{item.order_id}}</view>

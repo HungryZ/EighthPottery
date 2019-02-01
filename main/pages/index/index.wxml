@@ -1,5 +1,5 @@
 <swiper indicator-dots="true" autoplay="true" interval="3000" duration="750" circular="true">
-  <block wx:for="{{imgUrls}}">
+  <block wx:for="{{imgUrls}}" wx:key="*this">
     <swiper-item style='background-color: orange;'>
       <image class="swiper-item" src="{{item}}" mode='aspectFit' />
     </swiper-item>
@@ -12,9 +12,8 @@
 </navigator>
 
 <navigator class='search-navi' url='../webview/webview' style='background-color: #c7ffec'>
-  <view>商城跳转</view>
+  <view>X X X X</view>
 </navigator>
 
 <!-- <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber"> 获取手机号</button>
-https://weidian.com/?userid=1407876&spider_token=b636&wfr=pbj_item_3367&ifr=pbj_item_3367
  -->

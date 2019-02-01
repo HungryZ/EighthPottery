@@ -11,6 +11,9 @@ exports.main = async (event, context) => {
     _openid: wxContext.OPENID
   }).count()
 
+  console.log('用户信息：', event.avatarUrl);
+  console.log('用户信息：', event.nickName);
+
   const isNewUser = res.total == 0 ? true : false
   if (isNewUser) {
     await db.collection('user').add({
@@ -34,16 +37,13 @@ exports.main = async (event, context) => {
     })
   }
 
-  const res = await db.collection('administrator').where({
+  const res2 = await db.collection('administrator').where({
     admin_openid: wxContext.OPENID
   }).count()
 
-  console.log('用户信息：', event.avatarUrl);
-  console.log('用户信息：', event.nickName);
-
   return {
     message: isNewUser ? '新用户' : '老用户',
-    isAdministrator: res.total == 0 ? false : true
+    isAdministrator: res2.total == 0 ? false : true
   }
 
 }
