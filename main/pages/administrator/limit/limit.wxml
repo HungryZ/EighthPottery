@@ -1,6 +1,6 @@
 <view class='baseView'>
   <block wx:for='{{userArray}}' wx:key="*this">
-    <view class="userinfo" bindtap='userClicked'>
+    <view class="userinfo" id='{{index}}' bindtap='userClicked'>
       <image class="userinfo-avatar" src="{{item.avatarUrl}}" mode="cover"></image>
       <text class="userinfo-nickname">{{item.nickName}}</text>
     </view>
