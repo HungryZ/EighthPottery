@@ -1,6 +1,6 @@
 <!--pages/administrator/progress/progress.wxml-->
 <view class="weui-cells">
-  <block wx:for="{{progressArray}}" wx:key="*this">
+  <block wx:for="{{progressArray}}" wx:key="*progress">
 
     <!-- <view class="weui-cell__bd">
       <input id='{{idx}}' class="weui-input" value='{{item.description}}' placeholder="阶段名称" bindinput='descriptInputing' />

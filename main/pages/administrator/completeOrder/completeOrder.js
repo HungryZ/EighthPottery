@@ -4,9 +4,9 @@ Page({
 
   data: {
     addInputValue: null,
+    dateString: '',
     successIDArray: [],
     failureIDArray: [],
-    dateString: '',
     isResultShow: false,
   },
 

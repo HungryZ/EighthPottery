@@ -2,7 +2,7 @@
   <view class="page__bd">
     <view class="weui-tab">
       <view class="weui-navbar">
-        <block wx:for="{{tabs}}" wx:key="*this">
+        <block wx:for="{{tabs}}" wx:key="*tab">
           <view id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" bindtap="tabClick" style='background-color: white'>
             <view class="weui-navbar__title">{{item}}</view>
           </view>
@@ -12,7 +12,7 @@
 
       <view class="weui-tab__panel">
         <view class="weui-cells weui-cells_after-title">
-          <view id='{{idx}}' class="weui-cell" wx:for="{{orderArray}}" wx:for-item="item" wx:for-index="idx" wx:key="*this" bindtap='cellClicked' style='height: 80rpx'>
+          <view id='{{idx}}' class="weui-cell" wx:for="{{orderArray}}" wx:for-item="item" wx:for-index="idx" wx:key="*this2" bindtap='cellClicked' style='height: 80rpx'>
 
             <view class="weui-cell__hd">
               <view class="weui-label">{{item.order_id}}</view>

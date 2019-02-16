@@ -23,12 +23,13 @@
 <view class='result' wx:if='{{isResultShow}}' style='margin: 10px;font-size: 17px;'>
   <view style='color: #0bb20c'>成功（{{successIDArray.length}}）：</view>
   <view class='result-item' style='color: #0bb20c'>
-    <text wx:for='{{successIDArray}}'>{{item + '，'}}</text>
+    <text wx:for='{{successIDArray}}' wx:key='*this'>{{item + '，'}}</text>
   </view>
   <view style='color: #e64340;margin-top: 10px'>失败（{{failureIDArray.length}}）：</view>
   <view class='result-item' style='color: #e64340'>
-    <text wx:for='{{failureIDArray}}'>{{item + '，'}}</text>
+    <text wx:for='{{failureIDArray}}' wx:key='*this'>{{item + '，'}}</text>
   </view>
+  <view style='color: gray'>失败原因通常为订单已是完成状态</view>
 </view>
 
 <view class="weui-btn-area" style='margin-top: 128rpx;'>

@@ -5,10 +5,11 @@ Page({
 
   data: {
     addInputValue: null,
-    targetNumber: 0,
-    nowNumber: 0,
     createDate: null,
-    dateString: ''
+    dateString: '',
+    successIDArray: [],
+    failureIDArray: [],
+    isResultShow: false,
   },
 
   onLoad: function (options) {
@@ -27,44 +28,35 @@ Page({
   },
 
   addBtnClicked(e) {
-    wx.showLoading({
-      title: '创建中',
-    })
     // 全局替换中文逗号
     var idString = this.data.addInputValue.replace(/，/g, ",");
     var orderIdArray = idString.split(',');
-    this.setData({
-      targetNumber: orderIdArray.length
-    })
-    orderIdArray.forEach(orderId => {
-      this.addOrderByOrderId(orderId);
-    })
+    this.createOrderByOrderIdArray(orderIdArray)
   },
 
-  addOrderByOrderId(e) {
-    const db = wx.cloud.database()
-    db.collection('order').add({
+  createOrderByOrderIdArray(orderIdArray) {
+    wx.showLoading()
+    wx.cloud.callFunction({
+      name: 'insertOrderArray',
       data: {
-        order_id: e,
-        // note: '自动生成订单',
-        createDate: this.data.createDate,
-        isDone: false
+        orderIDArray: orderIdArray,
+        dateString: this.data.dateString
       },
       success: res => {
-        this.data.nowNumber += 1;
-        if (this.data.nowNumber == this.data.targetNumber) {
-          wx.showToast({
-            title: '添加订单成功',
-          })
-        }
+        wx.hideLoading()
+        console.log('[云函数] [insertOrderArray] 调用成功：', res.result)
+        this.setData({
+          isResultShow: true,
+          successIDArray: res.result.successIDs,
+          failureIDArray: res.result.failureIDs
+        })
       },
       fail: err => {
-        var toastTitle = err.errCode == '-502001' ? '订单号重复' : '新增记录失败';
+        console.error('[云函数] [insertOrderArray] 调用失败', err)
         wx.showToast({
           icon: 'none',
-          title: toastTitle
+          title: '请求失败'
         })
-        console.error('[数据库] [新增记录] 失败：', err)
       }
     })
   },

@@ -10,7 +10,6 @@
 </view>
 
 <view class="weui-cells weui-cells_after-title" style='margin-top: 10px'>
-
   <view class="weui-cell">
     <view class="weui-cell__bd">接单日期</view>
     <view class="weui-cell__ft weui-cell__ft_in-access">
@@ -19,7 +18,18 @@
       </picker>
     </view>
   </view>
+</view>
 
+<view class='result' wx:if='{{isResultShow}}' style='margin: 10px;font-size: 17px;'>
+  <view style='color: #0bb20c'>成功（{{successIDArray.length}}）：</view>
+  <view class='result-item' style='color: #0bb20c'>
+    <text wx:for='{{successIDArray}}' wx:key='*this'>{{item + '，'}}</text>
+  </view>
+  <view style='color: #e64340;margin-top: 10px'>失败（{{failureIDArray.length}}）：</view>
+  <view class='result-item' style='color: #e64340'>
+    <text wx:for='{{failureIDArray}}' wx:key='*this'>{{item + '，'}}</text>
+  </view>
+  <view style='color: gray'>失败原因通常为订单已存在</view>
 </view>
 
 <view class="weui-btn-area" style='margin-top: 128rpx;'>
