@@ -1,1 +1,7 @@
 /* pages/administrator/addAdmin/addAdmin.wxss */
+.userinfo-avatar {
+  width: 100rpx;
+  height: 100rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+}

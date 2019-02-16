@@ -6,12 +6,12 @@
   </block>
 </swiper>
 
-<navigator class='search-navi' url='../search/search'>
+<navigator class='search-navi' url='search/search'>
   <image class="search-img" src="../../image/search.png" />
   <text style='font-size: 28px'>订单查询</text>
 </navigator>
 
-<navigator class='search-navi' url='../webview/webview' style='background-color: #c7ffec'>
+<navigator class='search-navi' url='webview/webview' style='background-color: #c7ffec'>
   <view>X X X X</view>
 </navigator>
 

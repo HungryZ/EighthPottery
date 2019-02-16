@@ -1,66 +1,94 @@
-// pages/administrator/addAdmin/addAdmin.js
+//获取应用实例
+const app = getApp()
+
 Page({
 
-  /**
-   * 页面的初始数据
-   */
   data: {
-
+    inputShowed: false,
+    inputVal: "",
+    userArray: [],
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function (options) {
-
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
+  searchBtnClicked(e) {
+    if (this.data.inputText == "") return;
+    wx.showLoading()
 
+    const db = wx.cloud.database()
+    db.collection('user').where({
+      // 正则表达式
+      nickName: db.RegExp({
+        //从搜索栏中获取的value作为规则进行匹配。
+        regexp: this.data.inputVal,
+        //大小写不区分
+        options: 'i',
+      })
+    }).get({
+      success: res => {
+        wx.hideLoading();
+        this.setData({
+          userArray: res.data
+        })
+      },
+      fail: err => {
+        wx.showToast({
+          icon: 'none',
+          title: '查询失败'
+        })
+        console.error('[数据库] [查询记录] 失败：', err)
+      }
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
+  addBtnClicked(e) {
+    const selectedOpenID = this.data.userArray[e.currentTarget.id]._openid
+    this.addAdministrator(selectedOpenID)
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
+  addAdministrator(openID) {
+    wx.showLoading()
+    const db = wx.cloud.database()
+    db.collection('administrator').add({
+      data: {
+        admin_openid: openID
+      },
+      success: res => {
+        wx.showToast({
+          title: '添加成功'
+        })
+      },
+      fail: err => {
+        var toastTitle = err.errCode == '-502001' ? '该用户已是管理员' : '操作失败';
+        wx.showToast({
+          icon: 'none',
+          title: toastTitle
+        })
+      }
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
+  showInput: function () {
+    this.setData({
+      inputShowed: true
+    });
+  },
+  hideInput: function () {
+    this.setData({
+      inputVal: "",
+      inputShowed: false
+    });
+  },
+  clearInput: function () {
+    this.setData({
+      inputVal: ""
+    });
+  },
+  inputTyping: function (e) {
+    this.setData({
+      inputVal: e.detail.value
+    });
   },
 
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })

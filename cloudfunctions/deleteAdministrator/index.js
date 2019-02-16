@@ -5,7 +5,10 @@ cloud.init()
 const db = cloud.database()
 exports.main = async (event, context) => {
   try {
-    return await db.collection('administrator').doc(event._id).remove()
+    console.log(event._id)
+    return await db.collection('administrator').where({
+      admin_openid: event._openid
+    }).remove()
   } catch (e) {
     console.error(e)
   }

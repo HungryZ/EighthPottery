@@ -7,7 +7,6 @@ Page({
    * 页面的初始数据
    */
   data: {
-    inputText: '',
     orderModel: null,
     inputShowed: false,
     inputVal: "",
@@ -19,14 +18,8 @@ Page({
   onLoad: function (options) {
   },
 
-  inputing(e) {
-    this.setData({
-      inputText: e.detail.value
-    })
-  },
-
   searchBtnClicked(e) {
-    if (this.data.inputText == "") return;
+    if (this.data.inputVal == "") return;
     wx.showLoading({
       title: '正在查询',
     })
@@ -34,8 +27,8 @@ Page({
     const db = wx.cloud.database()
     db.collection('order').where({
       // 无条件时where可以省去
-      // order_id: Number(this.data.inputText),
-      order_id: this.data.inputText,
+      // order_id: Number(this.data.inputVal),
+      order_id: this.data.inputVal,
     }).get({
       success: res => {
         app.configOrder(res.data);

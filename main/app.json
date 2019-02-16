@@ -1,8 +1,8 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/search/search",
-    "pages/webview/webview",
+    "pages/index/search/search",
+    "pages/index/webview/webview",
     "pages/administrator/home/home",
     "pages/administrator/orderList/orderList",
     "pages/administrator/progress/progress",

@@ -1,2 +1,34 @@
-<!--pages/administrator/addAdmin/addAdmin.wxml-->
-<text>pages/administrator/addAdmin/addAdmin.wxml</text>
+<view class="weui-search-bar">
+  <view class="weui-search-bar__form">
+    <view class="weui-search-bar__box">
+      <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
+      <input type="text" class="weui-search-bar__input" placeholder="输入昵称查询" value="{{inputVal}}" focus="{{inputShowed}}" bindinput="inputTyping" bindconfirm='searchBtnClicked' />
+      <view class="weui-icon-clear" wx:if="{{inputVal.length > 0}}" bindtap="clearInput">
+        <icon type="clear" size="14"></icon>
+      </view>
+    </view>
+    <label class="weui-search-bar__label" hidden="{{inputShowed}}" bindtap="showInput">
+      <icon class="weui-icon-search" type="search" size="14"></icon>
+      <view class="weui-search-bar__text">输入昵称查询</view>
+    </label>
+  </view>
+  <view class="weui-search-bar__cancel-btn" hidden="{{!inputShowed}}" bindtap="hideInput">取消</view>
+</view>
+
+<view class="weui-cells weui-cells_after-title">
+  <view class="weui-cell" wx:for="{{userArray}}" wx:key="*this" style='height: 120rpx'>
+
+    <view class="weui-cell__hd">
+      <image class="userinfo-avatar" src="{{item.avatarUrl}}" mode="cover"></image>
+    </view>
+
+    <view class="weui-cell__bd">
+      <view class="weui-label">{{item.nickName}}</view>
+    </view>
+
+    <view class="weui-cell__ft">
+      <button id='{{index}}' class="weui-btn" type='primary' catchtap="addBtnClicked">设为管理员</button>
+    </view>
+
+  </view>
+</view>

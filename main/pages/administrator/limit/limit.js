@@ -4,7 +4,9 @@ Page({
     userArray: [],
   },
 
-  onLoad: function (options) {
+  onLoad: function(options) {},
+
+  onShow: function(options) {
     this.getAllAdministrator()
   },
 
@@ -32,7 +34,29 @@ Page({
     })
   },
 
-  openConfirm: function (admin) {
+  deleteAdministratorByOpenid(_openid) {
+    wx.showLoading()
+    wx.cloud.callFunction({
+      name: 'deleteAdministrator',
+      data: {
+        _openid: _openid
+      },
+      success: res => {
+        wx.hideLoading()
+        console.log('[云函数] [deleteAdministrator] 调用成功：', res.result)
+        this.getAllAdministrator()
+      },
+      fail: err => {
+        console.error('[云函数] [deleteAdministrator] 调用失败', err)
+        wx.showToast({
+          icon: 'none',
+          title: '请求失败'
+        })
+      }
+    })
+  },
+
+  openConfirm: function(admin) {
     let that = this
     wx.showModal({
       title: '删除确认',
@@ -40,10 +64,9 @@ Page({
       confirmText: "删除",
       confirmColor: "#e64340",
       cancelText: "取消",
-      success: function (res) {
-        console.log(res);
+      success: function(res) {
         if (res.confirm) {
-          that.deleteAdministratorByID(admin._id)
+          that.deleteAdministratorByOpenid(admin._openid)
         } else {
           console.log('取消')
         }

@@ -7,7 +7,6 @@ Page({
    */
   data: {
     orderArray: null,
-    searchInputValue: null,
     inputVal: "",
     inputShowed: false, 
     unloginUrl: '../../../image/user-unlogin.png',
@@ -117,18 +116,19 @@ Page({
 
   searchInputing(e) {
     this.setData({
-      inputText: e.detail.value
+      inputVal: e.detail.value
     })
   },
 
   searchBtnClicked(e) {
+    if (this.data.inputVal == "") return;
     wx.showLoading({
       title: '正在查询',
     })
 
     const db = wx.cloud.database()
     db.collection('order').where({
-      order_id: this.data.inputText,
+      order_id: this.data.inputVal,
     }).get({
       success: res => {
         if (!res.data[0]) {
