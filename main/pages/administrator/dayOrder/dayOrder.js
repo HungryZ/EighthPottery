@@ -12,7 +12,10 @@ Page({
     this.setData({
       dateString: nowDateString
     })
-    this.selectOrderByDateString(nowDateString)
+  },
+
+  onShow: function (options) {
+    this.selectOrderByDateString(this.data.dateString)
   },
 
   cellClicked(e) {
@@ -56,7 +59,10 @@ Page({
         console.error('[云函数] [getOrder] 调用失败', err)
         wx.showToast({
           icon: 'none',
-          title: '请求失败'
+          title: '该日期无订单'
+        })
+        this.setData({
+          orderArray: null
         })
       }
     })

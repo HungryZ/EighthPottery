@@ -1,5 +1,7 @@
 const cloud = require('wx-server-sdk')
-cloud.init()
+cloud.init({
+  env: 'release-c4723b',
+})
 const db = cloud.database()
 const MAX_LIMIT = 100
 

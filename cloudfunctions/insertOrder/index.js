@@ -1,7 +1,9 @@
 // 云函数入口文件
 const cloud = require('wx-server-sdk')
 
-cloud.init()
+cloud.init({
+  env: 'release-c4723b',
+})
 const db = cloud.database()
 
 exports.main = async (event, context) => {
