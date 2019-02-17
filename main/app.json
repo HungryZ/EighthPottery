@@ -5,6 +5,7 @@
     "pages/index/webview/webview",
     "pages/administrator/home/home",
     "pages/administrator/orderList/orderList",
+    "pages/administrator/dayOrder/dayOrder",
     "pages/administrator/progress/progress",
     "pages/administrator/progressDetail/progressDetail",
     "pages/administrator/limit/limit",

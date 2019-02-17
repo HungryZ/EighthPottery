@@ -12,6 +12,8 @@ Page({
 
   userClicked(e) {
     const selectedAdmin = this.data.userArray[e.currentTarget.id]
+    // 暂时写死，后期考虑加一个superAdmin表
+    if (selectedAdmin._openid == 'oLi_N4hWJfH-ViYWyJE83MS88yq4') return
     this.openConfirm(selectedAdmin)
   },
 

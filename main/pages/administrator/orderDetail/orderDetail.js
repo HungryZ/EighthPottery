@@ -61,11 +61,11 @@ Page({
     }).get({
       success: res => {
         wx.hideLoading();
+        console.log('[数据库] [查询记录] 成功: ', res)
         app.configOrder(res.data);
         this.setData({
           orderModel: res.data[0]
         })
-        console.log('[数据库] [查询记录] 成功: ', res)
       },
       fail: err => {
         wx.showToast({

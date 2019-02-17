@@ -29,6 +29,10 @@ Page({
         title: '订单列表',
       },
       {
+        path: 'dayOrder',
+        title: '每日订单',
+      },
+      {
         path: 'progress',
         title: '进度管理',
       },

@@ -61,10 +61,19 @@ App({
 
   configOrder(e) {
     e.forEach(order => {
+      // 小程序端与服务器端返回的Date数据类型不一样
+      if (!(order.createDate instanceof Date)) {
+        order.createDate = new Date(order.createDate)
+      }
+      
       const progressArray = this.globalData.progress;
       if (order.isDone) {
         // 已完成
         order.progress = progressArray[0].description;
+        // 小程序端与服务器端返回的Date数据类型不一样
+        if (!(order.doneDate instanceof Date)) {
+          order.doneDate = new Date(order.doneDate)
+        }
       } else {
         let days = (new Date() - order.createDate) / 1000 / 60 / 60 / 24
         let tdays = 0 // 所需时间

@@ -10,7 +10,7 @@ Page({
   data: {
     orderArray: null,
     filterBool: false,  // 控制筛选按钮
-    tabs: ["未完成订单", "全部订单"],
+    tabs: ["未完成订单", "已完成订单", "全部订单"],
     activeIndex: 0,
     sliderOffset: 0,
     sliderLeft: 0
@@ -44,9 +44,9 @@ Page({
     this.refreshData();
   },
 
-  onPullDownRefresh: function (options) {
-    this.refreshData();
-  },
+  // onPullDownRefresh: function (options) {
+  //   this.refreshData();
+  // },
 
   completeBtnClicked(e) {
     var btnIndex = e.currentTarget.id;
@@ -59,51 +59,38 @@ Page({
       url: '../orderDetail/orderDetail?_id=' + _id,
     })
   },
-
-  getAllOrder() {
-    const db = wx.cloud.database()
-    db.collection('order').get({
-      success: res => {
-        wx.hideLoading();
-        // 隐藏导航栏加载框
-        // wx.hideNavigationBarLoading();
-        // 停止下拉动作
-        wx.stopPullDownRefresh();
-        app.configOrder(res.data);
-        this.setData({
-          orderArray: res.data
-        })
-      },
-      fail: err => {
-        wx.showToast({
-          icon: 'none',
-          title: '查询记录失败'
-        })
-        console.error('[数据库] [查询记录] 失败：', err)
-      }
-    })
+  
+  refreshData() {
+    let parameters = {}
+    if (this.data.activeIndex == 0) {
+      parameters.isDone = false
+    } else if (this.data.activeIndex == 1) {
+      parameters.isDone = true
+    }
+    this.getOrder(parameters)
   },
 
-  getUndoneOrder() {
-    const db = wx.cloud.database()
-    db.collection('order').where({
-      isDone: false,
-    }).get({
+  getOrder(parameters) {
+    wx.showLoading()
+    wx.cloud.callFunction({
+      name: 'getOrder',
+      data: {
+        parameters: parameters
+      },
       success: res => {
-        wx.hideLoading();
-        wx.stopPullDownRefresh();
-
-        app.configOrder(res.data);
+        wx.hideLoading()
+        console.log('[云函数] [getOrder] 调用成功：', res.result)
+        app.configOrder(res.result.data);
         this.setData({
-          orderArray: res.data
+          orderArray: res.result.data
         })
       },
       fail: err => {
+        console.error('[云函数] [getOrder] 调用失败', err)
         wx.showToast({
           icon: 'none',
-          title: '查询失败'
+          title: '请求失败'
         })
-        console.error('[数据库] [查询记录] 失败：', err)
       }
     })
   },
@@ -132,17 +119,6 @@ Page({
         })
       }
     })
-  },
-
-  refreshData() {
-    wx.showLoading({
-      title: '正在加载',
-    })
-    if (this.data.activeIndex == 0) {
-      this.getUndoneOrder();
-    } else {
-      this.getAllOrder();
-    }
   },
 
   dateToString(date) {
