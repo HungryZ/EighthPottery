@@ -24,13 +24,17 @@ Page({
         path: 'completeOrder',
         title: '批量完成',
       },
-      {
-        path: 'orderList',
-        title: '订单列表',
-      },
+      // {
+      //   path: 'orderList',
+      //   title: '订单列表',
+      // },
       {
         path: 'dayOrder',
         title: '每日订单',
+      },
+      {
+        path: 'monthOrder',
+        title: '每月订单'
       },
       {
         path: 'progress',

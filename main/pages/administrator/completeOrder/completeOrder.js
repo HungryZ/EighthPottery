@@ -11,7 +11,7 @@ Page({
   },
 
   onLoad: function (options) {
-    let dateString = this.dateToString(new Date())
+    let dateString = app.dateToString(new Date())
     this.setData({
       dateString: dateString
     })
@@ -65,9 +65,5 @@ Page({
       dateString: e.detail.value
     })
   },
-
-  dateToString(date) {
-    return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() ;
-  }
 
 })

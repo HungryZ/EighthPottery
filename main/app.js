@@ -104,18 +104,21 @@ App({
 
       }
 
-      // date转string
-      var date = order.createDate;
-      var dateString = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
-      order.createDate = dateString;
+      order.createDate = this.dateToString(order.createDate);
 
       if (order.doneDate) {
-        var date = order.doneDate;
-        var dateString = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
-        order.doneDate = dateString;
+        order.doneDate = this.dateToString(order.doneDate);
       }
 
 
     });
+  },
+
+  dateToString(date) {
+    // 补零
+    var month = (Array(2).join('0') + (date.getMonth() + 1)).slice(-2)
+    var day = (Array(2).join('0') + date.getDate()).slice(-2)
+
+    return date.getFullYear() + '-' + month + '-' + day;
   },
 })

@@ -13,7 +13,8 @@ exports.main = async (event, context) => {
       .update({
         data: {
           isDone: true,
-          doneDate: new Date(event.dateString)
+          doneDate: new Date(event.dateString),
+          doneBy: cloud.getWXContext().OPENID
         }
       })
     tasks.push(promise)

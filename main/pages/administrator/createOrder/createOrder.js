@@ -14,8 +14,8 @@ Page({
 
   onLoad: function (options) {
     // 将时间默认调整为 08:00,因为不知道云函数Date类型如何传递
-    this.data.createDate = new Date(this.dateToString(new Date()) + ' 08:00')
-    let dateString = this.dateToString(new Date())
+    this.data.createDate = new Date(app.dateToString(new Date()) + ' 08:00')
+    let dateString = app.dateToString(new Date())
     this.setData({
       dateString: dateString
     })
@@ -65,14 +65,10 @@ Page({
     this.setData({
       createDate: new Date(e.detail.value)
     })
-    let dateString = this.dateToString(this.data.createDate)
+    let dateString = app.dateToString(this.data.createDate)
     this.setData({
       dateString: dateString
     })
   },
-
-  dateToString(date) {
-    return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
-  }
 
 })

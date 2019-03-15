@@ -1,4 +1,4 @@
-// pages/administrator/dayOrder/dayOrder.js
+
 const app = getApp()
 Page({
 
@@ -6,12 +6,13 @@ Page({
     dateString: '',
     orderArray: null,
   },
-  
+
   onLoad: function (options) {
-    const nowDateString = app.dateToString(new Date())
+    const nowDateString = this.dateToString(new Date())
     this.setData({
       dateString: nowDateString
     })
+    console.log('2019-01'.split('-'))
   },
 
   onShow: function (options) {
@@ -30,11 +31,6 @@ Page({
       dateString: e.detail.value
     })
     this.selectOrderByDateString(e.detail.value)
-  },
-
-  completeBtnClicked(e) {
-    var btnIndex = e.currentTarget.id;
-    this.completeOrderById(this.data.orderArray[btnIndex]._id);
   },
 
   selectOrderByDateString(dateString) {
@@ -68,30 +64,10 @@ Page({
     })
   },
 
-  completeOrderById(_id) {
-    wx.showLoading()
-    wx.cloud.callFunction({
-      name: 'updateOrder',
-      data: {
-        orderModel: {
-          _id: _id,
-          isDone: true,
-          doneDate: app.dateToString(new Date())
-        }
-      },
-      success: res => {
-        wx.hideLoading()
-        console.log('[云函数] [updateOrder] 调用成功：', res.result)
-        this.selectOrderByDateString(this.data.dateString)
-      },
-      fail: err => {
-        console.error('[云函数] [completeOrder] 调用失败', err)
-        wx.showToast({
-          icon: 'none',
-          title: '请求失败'
-        })
-      }
-    })
-  },
+  dateToString(date) {
+    // 补零
+    var month = (Array(2).join('0') + (date.getMonth() + 1)).slice(-2)
+    return date.getFullYear() + '-' + month;
+  }
 
 })

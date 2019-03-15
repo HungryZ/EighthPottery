@@ -103,7 +103,7 @@ Page({
         orderModel: {
           _id: _id,
           isDone: true,
-          doneDate: this.dateToString(new Date())
+          doneDate: app.dateToString(new Date())
         }
       },
       success: res => {
@@ -119,10 +119,6 @@ Page({
         })
       }
     })
-  },
-
-  dateToString(date) {
-    return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
   },
 
 })
