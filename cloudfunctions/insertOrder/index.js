@@ -11,7 +11,7 @@ exports.main = async (event, context) => {
     await db.collection('order')
       .add({
         data: {
-          _openid: 'cloud.getWXContext().OPENID',
+          _openid: event._openid,
           order_id: event.order_id,
           createDate: new Date(event.dateString),
           isDone: false

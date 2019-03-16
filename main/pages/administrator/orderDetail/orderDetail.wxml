@@ -5,19 +5,27 @@
   </view>
   <view class='lineView'>
     <text>接单日期</text>
-    <picker mode="date" bindchange="bindDateChange" value='{{orderModel.createDate}}'>
+    <picker class="weui-cell__ft weui-cell__ft_in-access" mode="date" bindchange="bindDateChange" value='{{orderModel.createDate}}'>
       <view>{{orderModel.createDate}}</view>
     </picker>
   </view>
-  <view class='lineView' wx:if='{{orderModel.doneDate}}'>
-    <text>完成日期</text>
-    <view>{{orderModel.doneDate}}</view>
+  <view class='lineView'>
+    <text>创建者</text>
+    <view>{{orderModel.createrName}}</view>
   </view>
   <view class='lineView'>
     <view class="weui-cell weui-cell_access" bindtap='selectProgress'>
       <view class="weui-cell__bd">进度</view>
       <view class="weui-cell__ft weui-cell__ft_in-access">{{orderModel.progress}}</view>
     </view>
+  </view>
+  <view class='lineView' wx:if='{{orderModel.doneDate}}'>
+    <text>完成日期</text>
+    <view>{{orderModel.doneDate}}</view>
+  </view>
+  <view class='lineView'>
+    <text>完成者</text>
+    <view>{{orderModel.doneName}}</view>
   </view>
   <view class="weui-cells__title">备注</view>
   <view class="weui-cells weui-cells_after-title">

@@ -6,7 +6,8 @@ Page({
   data: {
     _id: null,
     orderModel: null,
-    updateParameters: {}
+    updateParameters: {},
+    operatorNameArray: [],
   },
 
   onLoad: function (options) {
@@ -34,7 +35,7 @@ Page({
           })
           if (res.tapIndex == 0) {
             that.data.updateParameters.isDone = true;
-            that.data.updateParameters.doneDate = that.dateToString(new Date())
+            that.data.updateParameters.doneDate = app.dateToString(new Date())
           } else {
             that.data.updateParameters.isDone = false;
           }
@@ -52,27 +53,51 @@ Page({
   },
 
   getOrder() {
-    wx.showLoading({
-      title: '正在加载',
-    })
-    const db = wx.cloud.database()
-    db.collection('order').where({
-      _id: this.data._id
-    }).get({
+    wx.showLoading()
+    // const db = wx.cloud.database()
+    // db.collection('order').where({
+    //   _id: this.data._id
+    // }).get({
+    //   success: res => {
+    //     wx.hideLoading();
+    //     console.log('[数据库] [查询记录] 成功: ', res)
+    //     app.configOrder(res.data);
+    //     this.setData({
+    //       orderModel: res.data[0]
+    //     })
+        
+    //     this.getUserNickName(this.orderModel._openid, 0)
+    //     if (this.orderModel.doneBy) {
+    //       this.getUserNickName(this.orderModel._openid, 1)
+    //     }
+    //   },
+    //   fail: err => {
+    //     wx.showToast({
+    //       icon: 'none',
+    //       title: '查询记录失败'
+    //     })
+    //     console.error('[数据库] [查询记录] 失败：', err)
+    //   }
+    // })
+    wx.cloud.callFunction({
+      name: 'getOrderAdmin',
+      data: {
+        orderID: this.data._id
+      },
       success: res => {
-        wx.hideLoading();
-        console.log('[数据库] [查询记录] 成功: ', res)
-        app.configOrder(res.data);
+        wx.hideLoading()
+        console.log('[云函数] [getOrderAdmin] 调用成功：', res.result)
+        app.configOrder(res.result.order);
         this.setData({
-          orderModel: res.data[0]
+          orderModel: res.result.order
         })
       },
       fail: err => {
+        console.error('[云函数] [getOrderAdmin] 调用失败', err)
         wx.showToast({
           icon: 'none',
-          title: '查询记录失败'
+          title: '请求失败'
         })
-        console.error('[数据库] [查询记录] 失败：', err)
       }
     })
   },
@@ -87,6 +112,9 @@ Page({
       success: res => {
         wx.hideLoading()
         console.log('[云函数] [updateOrder] 调用成功：', res.result)
+        this.data.updateParameters = {
+          _id: this.data._id
+        }
         this.getOrder()
       },
       fail: err => {
@@ -142,10 +170,6 @@ Page({
     });
   },
 
-  dateToString(date) {
-    return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
-  },
-
   bindDateChange(e) {
     let newModel = this.data.orderModel
     newModel.createDate = e.detail.value
@@ -154,5 +178,22 @@ Page({
     })
     this.data.updateParameters.createDate = e.detail.value
   },
+
+  getUserNickName(_openid, index) {
+    const db = wx.cloud.database()
+    db.collection('user').where({
+      _openid: _openid
+    }).get({
+      success: res => {
+        let nameArray = this.data.operatorNameArray
+        nameArray[index] = res.data[0].nickName
+        this.setData({
+          operatorNameArray: nameArray
+        })
+      },
+      fail: err => {
+      }
+    })
+  }
 
 })

@@ -12,6 +12,7 @@ exports.main = async (event, context) => {
     const promise = cloud.callFunction({
       name: 'insertOrder',
       data: {
+        _openid: cloud.getWXContext().OPENID,
         order_id: order_id,
         dateString: event.dateString,
       }

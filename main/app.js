@@ -60,6 +60,12 @@ App({
   },
 
   configOrder(e) {
+    // 单个order转为数组
+    if (!Array.isArray(e)) {
+      let oneOrder = e
+      e = [oneOrder]
+    }
+
     e.forEach(order => {
       // 小程序端与服务器端返回的Date数据类型不一样
       if (!(order.createDate instanceof Date)) {
