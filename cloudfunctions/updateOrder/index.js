@@ -12,6 +12,7 @@ exports.main = async (event, context) => {
     let parameters = {
       isDone: orderModel.isDone,
       doneDate: orderModel.isDone ? new Date(orderModel.doneDate) : _.remove(),
+      doneBy: orderModel.isDone ? cloud.getWXContext().OPENID : _.remove(),
     }
     if (orderModel.createDate) {
       parameters.createDate = new Date(orderModel.createDate)

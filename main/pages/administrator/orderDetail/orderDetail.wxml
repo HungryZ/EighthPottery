@@ -9,7 +9,7 @@
       <view>{{orderModel.createDate}}</view>
     </picker>
   </view>
-  <view class='lineView'>
+  <view class='lineView' wx:if='{{orderModel.createrName}}'>
     <text>创建者</text>
     <view>{{orderModel.createrName}}</view>
   </view>
@@ -23,7 +23,7 @@
     <text>完成日期</text>
     <view>{{orderModel.doneDate}}</view>
   </view>
-  <view class='lineView'>
+  <view class='lineView' wx:if='{{orderModel.doneName}}'>
     <text>完成者</text>
     <view>{{orderModel.doneName}}</view>
   </view>

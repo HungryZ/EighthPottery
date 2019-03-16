@@ -2,7 +2,7 @@
   <view class="weui-search-bar__form">
     <view class="weui-search-bar__box">
       <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
-      <input type="text" class="weui-search-bar__input" placeholder="请输入订单号" value="{{inputVal}}" focus="{{inputShowed}}" bindinput="inputTyping" bindconfirm='searchBtnClicked' />
+      <input type="number" class="weui-search-bar__input" placeholder="请输入订单号" value="{{inputVal}}" focus="{{false}}" bindinput="inputTyping" bindconfirm='searchBtnClicked' />
       <view class="weui-icon-clear" wx:if="{{inputVal.length > 0}}" bindtap="clearInput">
         <icon type="clear" size="14"></icon>
       </view>

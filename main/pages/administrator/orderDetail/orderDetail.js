@@ -54,31 +54,6 @@ Page({
 
   getOrder() {
     wx.showLoading()
-    // const db = wx.cloud.database()
-    // db.collection('order').where({
-    //   _id: this.data._id
-    // }).get({
-    //   success: res => {
-    //     wx.hideLoading();
-    //     console.log('[数据库] [查询记录] 成功: ', res)
-    //     app.configOrder(res.data);
-    //     this.setData({
-    //       orderModel: res.data[0]
-    //     })
-        
-    //     this.getUserNickName(this.orderModel._openid, 0)
-    //     if (this.orderModel.doneBy) {
-    //       this.getUserNickName(this.orderModel._openid, 1)
-    //     }
-    //   },
-    //   fail: err => {
-    //     wx.showToast({
-    //       icon: 'none',
-    //       title: '查询记录失败'
-    //     })
-    //     console.error('[数据库] [查询记录] 失败：', err)
-    //   }
-    // })
     wx.cloud.callFunction({
       name: 'getOrderAdmin',
       data: {
@@ -178,22 +153,5 @@ Page({
     })
     this.data.updateParameters.createDate = e.detail.value
   },
-
-  getUserNickName(_openid, index) {
-    const db = wx.cloud.database()
-    db.collection('user').where({
-      _openid: _openid
-    }).get({
-      success: res => {
-        let nameArray = this.data.operatorNameArray
-        nameArray[index] = res.data[0].nickName
-        this.setData({
-          operatorNameArray: nameArray
-        })
-      },
-      fail: err => {
-      }
-    })
-  }
 
 })

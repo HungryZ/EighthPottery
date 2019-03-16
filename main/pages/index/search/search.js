@@ -8,7 +8,7 @@ Page({
    */
   data: {
     orderModel: null,
-    inputShowed: false,
+    inputShowed: true,
     inputVal: "",
   },
 
@@ -16,6 +16,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.setData({
+      inputVal: options.inputVal
+    })
+    this.searchBtnClicked()
   },
 
   searchBtnClicked(e) {
