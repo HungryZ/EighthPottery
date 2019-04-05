@@ -1,35 +1,43 @@
 const cloud = require('wx-server-sdk')
 cloud.init({
-  env: 'release-c4723b',
+  // env: 'release-c4723b',
 })
 const db = cloud.database()
 const _ = db.command
 const MAX_LIMIT = 100
 
-exports.main = async (event, context) => {
+exports.main = async(event, context) => {
   console.log('parameters: ', event.parameters)
 
-  if (event.parameters.createDate.length == 10) {       // 按精确日期查询
+  if (event.parameters.createDate) {
+    if (event.parameters.createDate.length == 10) { // 按精确日期查询
 
-    event.parameters.createDate = new Date(event.parameters.createDate)
-    
-  } else if(event.parameters.createDate.length == 7) {  // 按月份查询
+      event.parameters.createDate = new Date(event.parameters.createDate)
 
-    let fromDate = new Date(event.parameters.createDate + '-01')
+    } else if (event.parameters.createDate.length == 7) { // 按月份查询
 
-    let dateArray = event.parameters.createDate.split('-')
-    let toYear = Number(dateArray[0])
-    let toMonth = Number(dateArray[1]) + 1
-    if (toMonth == 13) {
-      toMonth = 1
-      toYear += 1
+      let fromDate = new Date(event.parameters.createDate + '-01')
+
+      let dateArray = event.parameters.createDate.split('-')
+      let toYear = Number(dateArray[0])
+      let toMonth = Number(dateArray[1]) + 1
+      if (toMonth == 13) {
+        toMonth = 1
+        toYear += 1
+      }
+      let toDate = new Date(toYear + '-' + toMonth + '-01')
+
+      console.log('From : ' + fromDate)
+      console.log('To : ' + toDate)
+
+      event.parameters.createDate = _.gte(fromDate).and(_.lt(toDate))
     }
-    let toDate = new Date(toYear + '-' + toMonth + '-01')
-
-    console.log('From : ' + fromDate)
-    console.log('To : ' + toDate)
-    
-    event.parameters.createDate = _.gte(fromDate).and(_.lt(toDate))
+  } else if (event.parameters.spentDays) { // 按创建天数查询
+    let nowDate = new Date()
+    nowDate.setDate(nowDate.getDate() - event.parameters.spentDays)
+    aimDate = nowDate
+    event.parameters.createDate = _.lt(aimDate)
+    delete event.parameters.spentDays
   }
 
   // 先取出集合记录总数

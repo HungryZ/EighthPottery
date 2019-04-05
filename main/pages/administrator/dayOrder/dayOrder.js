@@ -32,11 +32,6 @@ Page({
     this.selectOrderByDateString(e.detail.value)
   },
 
-  completeBtnClicked(e) {
-    var btnIndex = e.currentTarget.id;
-    this.completeOrderById(this.data.orderArray[btnIndex]._id);
-  },
-
   selectOrderByDateString(dateString) {
     console.log('Select By date : ', dateString)
     wx.showLoading()
@@ -63,32 +58,6 @@ Page({
         })
         this.setData({
           orderArray: null
-        })
-      }
-    })
-  },
-
-  completeOrderById(_id) {
-    wx.showLoading()
-    wx.cloud.callFunction({
-      name: 'updateOrder',
-      data: {
-        orderModel: {
-          _id: _id,
-          isDone: true,
-          doneDate: app.dateToString(new Date())
-        }
-      },
-      success: res => {
-        wx.hideLoading()
-        console.log('[云函数] [updateOrder] 调用成功：', res.result)
-        this.selectOrderByDateString(this.data.dateString)
-      },
-      fail: err => {
-        console.error('[云函数] [completeOrder] 调用失败', err)
-        wx.showToast({
-          icon: 'none',
-          title: '请求失败'
         })
       }
     })

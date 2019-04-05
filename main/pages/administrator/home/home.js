@@ -37,6 +37,10 @@ Page({
         title: '每月订单'
       },
       {
+        path: 'warningOrder',
+        title: '预警订单'
+      },
+      {
         path: 'progress',
         title: '进度管理',
       },

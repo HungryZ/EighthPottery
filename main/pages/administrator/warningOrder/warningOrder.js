@@ -3,20 +3,28 @@ const app = getApp()
 Page({
 
   data: {
-    dateString: '',
+    inputVal: "23",
     orderArray: null,
+    isFocus: false,
   },
 
   onLoad: function (options) {
-    const nowDateString = this.dateToString(new Date())
-    this.setData({
-      dateString: nowDateString
-    })
-    // console.log('2019-01'.split('-'))
   },
 
   onShow: function (options) {
     this.selectOrderByDateString(this.data.dateString)
+  },
+
+  inputTyping: function (e) {
+    this.setData({
+      inputVal: e.detail.value
+    });
+  },
+
+  titleClicked() {
+    this.setData({
+      isFocus: !this.data.isFocus
+    })
   },
 
   cellClicked(e) {
@@ -26,21 +34,13 @@ Page({
     })
   },
 
-  bindDateChange(e) {
-    this.setData({
-      dateString: e.detail.value
-    })
-    this.selectOrderByDateString(e.detail.value)
-  },
-
   selectOrderByDateString(dateString) {
-    console.log('Select By date : ', dateString)
     wx.showLoading()
     wx.cloud.callFunction({
       name: 'getOrder',
       data: {
         parameters: {
-          createDate: dateString
+          spentDays: this.data.inputVal
         }
       },
       success: res => {
@@ -63,11 +63,5 @@ Page({
       }
     })
   },
-
-  dateToString(date) {
-    // 补零
-    var month = (Array(2).join('0') + (date.getMonth() + 1)).slice(-2)
-    return date.getFullYear() + '-' + month;
-  }
 
 })
