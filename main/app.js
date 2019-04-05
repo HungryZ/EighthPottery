@@ -16,8 +16,8 @@ App({
     } else {
       wx.cloud.init({
         traceUser: true,
-        env: 'test-aa70dd', 
-        // env: 'release-c4723b', 
+        // env: 'test-aa70dd', 
+        env: 'release-c4723b', 
       })
     }
   },
@@ -73,6 +73,16 @@ App({
       }
       
       const progressArray = this.globalData.progress;
+
+      if (order.isTook) {
+        // 已领取
+        order.progress = '已领取';
+        // 小程序端与服务器端返回的Date数据类型不一样
+        if (!(order.tookDate instanceof Date)) {
+          order.tookDate = new Date(order.tookDate)
+        }
+      }
+
       if (order.isDone) {
         // 已完成
         order.progress = progressArray[0].description; 
@@ -116,6 +126,9 @@ App({
         order.doneDate = this.dateToString(order.doneDate);
       }
 
+      if (order.tookDate) {
+        order.tookDate = this.dateToString(order.tookDate);
+      }
 
     });
   },

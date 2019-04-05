@@ -40,7 +40,8 @@ Page({
       name: 'getOrder',
       data: {
         parameters: {
-          spentDays: this.data.inputVal
+          spentDays: this.data.inputVal,
+          isDone: false
         }
       },
       success: res => {

@@ -20,6 +20,14 @@ Page({
     this.data.updateParameters.note = e.detail.value;
   },
 
+  submitBtnClicked(e) {
+    this.updateOrder()
+  },
+
+  deleteBtnClicked() {
+    this.openConfirm();
+  },
+
   selectProgress() {
     var that = this
     var descriptions = [app.globalData.progress[0].description, '重置']
@@ -44,12 +52,35 @@ Page({
     });
   },
 
-  submitBtnClicked(e) {
-    this.updateOrder()
-  },
-
-  deleteBtnClicked() {
-    this.openConfirm();
+  selectTookStatus() {
+    if (!this.data.orderModel.isDone) {
+      wx.showToast({
+        icon: 'none',
+        title: '未完成状态下无法操作',
+      })
+      return
+    }
+    var that = this
+    var descriptions = ['已领取', '未领取']
+    wx.showActionSheet({
+      itemList: descriptions,
+      success: function (res) {
+        if (!res.cancel) {
+          console.log(res.tapIndex)
+          var newOrderModel = that.data.orderModel;
+          newOrderModel.isTook = res.tapIndex == 0;
+          that.setData({
+            orderModel: newOrderModel
+          })
+          if (res.tapIndex == 0) {
+            that.data.updateParameters.isTook = true;
+            that.data.updateParameters.tookDate = app.dateToString(new Date())
+          } else {
+            that.data.updateParameters.isTook = false;
+          }
+        }
+      }
+    });
   },
 
   getOrder() {

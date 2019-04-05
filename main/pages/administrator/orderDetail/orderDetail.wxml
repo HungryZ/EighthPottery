@@ -3,6 +3,7 @@
     <text>订单号</text>
     <view>{{orderModel.order_id}}</view>
   </view>
+
   <view class='lineView'>
     <text>接单日期</text>
     <picker class="weui-cell__ft weui-cell__ft_in-access" mode="date" bindchange="bindDateChange" value='{{orderModel.createDate}}'>
@@ -13,6 +14,7 @@
     <text>创建者</text>
     <view>{{orderModel.createrName}}</view>
   </view>
+
   <view class='lineView'>
     <view class="weui-cell weui-cell_access" bindtap='selectProgress'>
       <view class="weui-cell__bd">进度</view>
@@ -27,6 +29,22 @@
     <text>完成者</text>
     <view>{{orderModel.doneName}}</view>
   </view>
+
+  <view class='lineView'>
+    <view class="weui-cell weui-cell_access" bindtap='selectTookStatus'>
+      <view class="weui-cell__bd">领取状态</view>
+      <view class="weui-cell__ft weui-cell__ft_in-access">{{orderModel.isTook ? '已领取' : '未领取'}}</view>
+    </view>
+  </view>
+  <view class='lineView' wx:if='{{orderModel.tookDate}}'>
+    <text>领取日期</text>
+    <view>{{orderModel.tookDate}}</view>
+  </view>
+  <view class='lineView' wx:if='{{orderModel.tookModifiedName}}'>
+    <text>领取操作者</text>
+    <view>{{orderModel.tookModifiedName}}</view>
+  </view>
+
   <view class="weui-cells__title">备注</view>
   <view class="weui-cells weui-cells_after-title">
     <view class="weui-cell">

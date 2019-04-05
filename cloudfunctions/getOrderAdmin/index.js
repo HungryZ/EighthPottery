@@ -2,7 +2,7 @@
 const cloud = require('wx-server-sdk')
 
 cloud.init({
-  // env: 'release-c4723b',
+  env: 'release-c4723b',
 })
 const db = cloud.database()
 
@@ -27,6 +27,13 @@ exports.main = async (event, context) => {
     tasks.push(promise2)
   }
 
+  if (orderModel.tookModifiedBy) {
+    const promise3 = db.collection('user').where({
+      _openid: orderModel.tookModifiedBy
+    }).get()
+    tasks.push(promise3)
+  }
+
   let userArray = (await Promise.all(tasks)).map(res => {
     return res.data[0]
   })
@@ -35,6 +42,9 @@ exports.main = async (event, context) => {
   }
   if (userArray[1]) {
     orderModel.doneName = userArray[0].nickName
+  }
+  if (userArray[2]) {
+    orderModel.tookModifiedName = userArray[0].nickName
   }
 
   return {
