@@ -1,6 +1,6 @@
 // 云函数入口文件
 const cloud = require('wx-server-sdk')
-cloud.init()
+cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV }) // 使用当前云环境
 const db = cloud.database()
 // 云函数入口函数
 exports.main = async (event, context) => {
@@ -15,6 +15,7 @@ exports.main = async (event, context) => {
   console.log('用户信息：', event.nickName);
 
   const isNewUser = res.total == 0 ? true : false
+  console.log('isNewUser：', isNewUser);
   if (isNewUser) {
     await db.collection('user').add({
       data: {
@@ -22,7 +23,6 @@ exports.main = async (event, context) => {
         avatarUrl: event.avatarUrl,
         nickName: event.nickName,
         createDate: nowDate,
-        lastLoginDate: nowDate,
       }
     })
   } else {
@@ -32,18 +32,7 @@ exports.main = async (event, context) => {
       data: {
         avatarUrl: event.avatarUrl,
         nickName: event.nickName,
-        lastLoginDate: nowDate,
       }
     })
   }
-
-  const res2 = await db.collection('administrator').where({
-    admin_openid: wxContext.OPENID
-  }).count()
-
-  return {
-    message: isNewUser ? '新用户' : '老用户',
-    isAdministrator: res2.total == 0 ? false : true
-  }
-
 }

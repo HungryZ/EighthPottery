@@ -1,9 +1,11 @@
 <view class="userinfo">
   <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl ? userInfo.avatarUrl : unloginUrl}}" mode="cover"></image>
-  <button class='loginBtn' wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo" style=''> 点击登录 </button>
-  <block wx:else>
-    <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-  </block>
+  <navigator url="../login/login">
+    <button class='loginBtn' wx:if="{{!hasUserInfo}}"> 登录 </button>
+    <block wx:else>
+      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+    </block>
+  </navigator>
 </view>
 
 <view wx:if='{{isAdministrator}}'>

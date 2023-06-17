@@ -6,6 +6,11 @@ Page({
   data: {
     inputShowed: false,
     inputVal: "",
+    // imgUrls: [
+    //   'cloud://test-aa70dd.7465-test-aa70dd/Banner/timg-4.jpeg',
+    //   'cloud://test-aa70dd.7465-test-aa70dd/Banner/timg-5.jpeg',
+    //   'cloud://test-aa70dd.7465-test-aa70dd/Banner/timg-6.jpeg'
+    // ],
   },
 
   onLoad: function (options) {

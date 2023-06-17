@@ -1,0 +1,13 @@
+/* pages/administrator/login/login.wxss */
+.avatar {
+  margin-top: 100rpx;
+  margin-bottom: 50rpx;
+  width: 260rpx;
+  height: 260rpx;
+}
+
+.input {
+  padding-left: 50rpx;
+  padding-right: 50rpx;
+  height: 100rpx;
+}

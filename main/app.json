@@ -14,7 +14,8 @@
     "pages/administrator/addAdmin/addAdmin",
     "pages/administrator/createOrder/createOrder",
     "pages/administrator/completeOrder/completeOrder",
-    "pages/administrator/orderDetail/orderDetail"
+    "pages/administrator/orderDetail/orderDetail",
+    "pages/administrator/login/login"
   ],
   "window": {
     "navigationBarBackgroundColor": "#fff",
@@ -35,5 +36,6 @@
         "text": "我的"
       }
     ]
-  }
+  },
+  "sitemapLocation": "sitemap26.json"
 }

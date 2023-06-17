@@ -1,0 +1,5 @@
+<button class="avatar-wrapper" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
+  <image class="avatar" src="{{avatarUrl}}" mode="cover"></image>
+</button>
+<input type="nickname" class="input" bindinput="nicknameInputting" bindnicknamereview="bindnicknamereview" placeholder="请输入昵称" />
+<button bindtap="loginBtnClicked"> 登录 </button>
